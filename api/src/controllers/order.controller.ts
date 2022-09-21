@@ -4,6 +4,7 @@ import Order, { OrderDocument } from '../models/order'
 import User from '../models/user'
 import orderService from '../services/order.service'
 import { BadRequestError } from '../helpers/apiError'
+import userService from '../services/user.service'
 
 // POST /orders
 export const createOrder = async (req: Request, res: Response, next: NextFunction) => {
@@ -11,7 +12,9 @@ export const createOrder = async (req: Request, res: Response, next: NextFunctio
     const { orderDate, deliveryDate, returnDate, products, userId } = req.body
     const order = new Order({ orderDate, deliveryDate, returnDate, products, userId })
 
-    const user = await User.updateOne({ _id: userId }, { $push: { orders: order._id } })
+    // const user = await User.updateOne({ _id: userId }, { $push: { orders: order._id } })
+    const update = { orders: order._id }
+    await userService.updateOne(userId, update)
 
     await orderService.create(order)
 

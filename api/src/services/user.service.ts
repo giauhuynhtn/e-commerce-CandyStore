@@ -33,6 +33,21 @@ const update = async (
   return foundUser
 }
 
+const updateOne = async (
+  userId: string,
+  update: Partial<UserDocument>
+): Promise<UserDocument | null> => {
+  const foundUser = await User.findById(userId)
+
+  if (!foundUser) {
+    throw new NotFoundError(`User ${userId} does not exist`)
+  }
+
+  await User.updateOne({ _id: userId }, { $push: update })
+
+  return foundUser
+}
+
 const deleteUser = async (userId: string): Promise<UserDocument | null> => {
   const foundUser = await User.findByIdAndDelete(userId)
 
@@ -43,4 +58,4 @@ const deleteUser = async (userId: string): Promise<UserDocument | null> => {
   return foundUser
 }
 
-export default { create, findAll, findById, update, deleteUser }
+export default { create, findAll, findById, update, deleteUser, updateOne }
