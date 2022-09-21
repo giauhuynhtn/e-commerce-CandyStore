@@ -20,6 +20,7 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
     }
   }
 }
+
 // GET /products
 export const findAll = async (req: Request, res: Response, next: NextFunction) => {
   try {

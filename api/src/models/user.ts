@@ -32,6 +32,11 @@ const userSchema = new mongoose.Schema({
     },
     required: [true, 'Email required'],
   },
+  username: {
+    type: String,
+    required: [true, 'Username required'],
+    default: 'username',
+  },
   password: {
     type: String,
     required: true,
