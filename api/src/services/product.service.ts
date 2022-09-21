@@ -19,4 +19,29 @@ const findById = async (productId: string): Promise<ProductDocument> => {
   return foundProduct
 }
 
-export default { create, findAll, findById }
+const update = async (
+  productId: string,
+  update: Partial<ProductDocument>
+): Promise<ProductDocument | null> => {
+  const foundProduct = await Product.findByIdAndUpdate(productId, update, {
+    new: true,
+  })
+
+  if (!foundProduct) {
+    throw new NotFoundError(`Product ${productId} not found`)
+  }
+
+  return foundProduct
+}
+
+const deleteProduct = async (productId: string): Promise<ProductDocument | null> => {
+  const foundProduct = await Product.findByIdAndDelete(productId)
+
+  if (!foundProduct) {
+    throw new NotFoundError(`Product ${productId} not found`)
+  }
+
+  return foundProduct
+}
+
+export default { create, findAll, findById, update, deleteProduct }
