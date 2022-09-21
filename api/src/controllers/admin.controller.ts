@@ -1,0 +1,82 @@
+import { Request, Response, NextFunction } from 'express'
+
+import Admin, { AdminDocument } from '../models/admin'
+import adminService from '../services/admin.service'
+import { BadRequestError } from '../helpers/apiError'
+
+// POST /admins
+export const createAdmin = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { firstname, lastname, email, username, password, roles } = req.body
+    const admin = new Admin({ firstname, lastname, email, username, password, roles })
+
+    await adminService.create(admin)
+    res.json(admin)
+  } catch (error) {
+    if (error instanceof Error && error.name === 'ValidationError') {
+      next(new BadRequestError('Invalid request', 400, error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+//  GET /admins
+export const findAll = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    res.json(await adminService.findAll())
+  } catch (error) {
+    if (error instanceof Error && error.name === 'ValidationError') {
+      next(new BadRequestError('Invalid request', 400, error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// GET /admins/:adminId
+export const findById = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    res.json(await adminService.findById(req.params.adminId))
+  } catch (error) {
+    if (error instanceof Error && error.name === 'ValidationError') {
+      next(new BadRequestError('Invalid request', 400, error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// PUT /admins/:adminId
+export const updateAdmin = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const update = req.body
+    const adminId = req.params.adminId
+    const updatedAdmin = await adminService.update(adminId, update)
+    res.json(updatedAdmin)
+  } catch (error) {
+    if (error instanceof Error && error.name === 'ValidationError') {
+      next(new BadRequestError('Invalid Request', 400, error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// DELETE /admins/:adminId
+export const deleteAdmin = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    await adminService.deleteAdmin(req.params.adminId)
+    res.status(204).end()
+  } catch (error) {
+    if (error instanceof Error && error.name === 'ValidationError') {
+      next(new BadRequestError('Invalid Request', 400, error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// POST /admins/products
+// PUT /admins/:productId
+// DELETE /admins/:productId
