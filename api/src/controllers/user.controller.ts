@@ -7,8 +7,8 @@ import { BadRequestError } from '../helpers/apiError'
 // POST /users
 export const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { firstname, lastname, email, username, password, order } = req.body
-    const user = new User({ firstname, lastname, email, username, password, order })
+    const { firstname, lastname, email, username, password, orders } = req.body
+    const user = new User({ firstname, lastname, email, username, password, orders })
 
     await userService.create(user)
     res.json(user)

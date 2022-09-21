@@ -8,10 +8,10 @@ import { BadRequestError } from '../helpers/apiError'
 // POST /orders
 export const createOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { orderDate, deliveryDate, returnDate, product, userId } = req.body
-    const order = new Order({ orderDate, deliveryDate, returnDate, product, userId })
+    const { orderDate, deliveryDate, returnDate, products, userId } = req.body
+    const order = new Order({ orderDate, deliveryDate, returnDate, products, userId })
 
-    const user = await User.updateOne({ _id: userId }, { $push: { order: order._id } })
+    const user = await User.updateOne({ _id: userId }, { $push: { orders: order._id } })
 
     await orderService.create(order)
 
@@ -45,6 +45,36 @@ export const findById = async (req: Request, res: Response, next: NextFunction) 
   } catch (error) {
     if (error instanceof Error && error.name === 'ValidationError') {
       next(new BadRequestError('Invalid request', 400, error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+//  PUT /orders/:orderId
+export const updateOrder = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const update = req.body
+    const orderId = req.params.orderId
+    const updatedOrder = await orderService.update(orderId, update)
+    res.json(updatedOrder)
+  } catch (error) {
+    if (error instanceof Error && error.name === 'ValidationError') {
+      next(new BadRequestError('Invalid Request', 400, error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// DELETE /orders/:orderId
+export const deleteOrder = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    await orderService.deleteOrder(req.params.orderId)
+    res.status(204).end()
+  } catch (error) {
+    if (error instanceof Error && error.name === 'ValidationError') {
+      next(new BadRequestError('Invalid Request', 400, error))
     } else {
       next(error)
     }
