@@ -1,13 +1,15 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from 'pages/Home'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "pages/Home";
+import ProductInfo from "pages/ProductInfo";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/:productId' element={<ProductInfo />} />
       </Routes>
     </BrowserRouter>
-  )
-}
-export default App
+  );
+};
+export default App;

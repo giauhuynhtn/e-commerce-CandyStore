@@ -9,7 +9,6 @@ const Home = () => {
   const { products } = useSelector((state: RootState) => {
     return state;
   });
-  console.log("products:", products);
 
   useEffect(() => {
     dispatch(fetchProductsThunk());
