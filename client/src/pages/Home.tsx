@@ -26,6 +26,11 @@ const Home = () => {
     dispatch(fetchProductsThunk());
   }, [dispatch]);
 
+  const renderList =
+    products.filteredItemsByName.length === 0
+      ? products.items
+      : products.filteredItemsByName;
+
   return (
     <>
       <h1>HOME</h1>
@@ -37,7 +42,7 @@ const Home = () => {
       />
       <button onClick={handleClick}>Search</button>
       <ul>
-        {products.filteredItemsByName.map((product, index) => (
+        {renderList.map((product, index) => (
           <li key={index}>
             <h3>{product.name}</h3>
             <p>{product.description}</p>
