@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
-import { fetchProductsThunk } from "redux/slices/productsSlice";
+import {
+  fetchProductsThunk,
+  fetchProductsByNameThunk,
+} from "redux/slices/productsSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AppDispatch, RootState } from "../redux/store";
@@ -9,6 +12,15 @@ const Home = () => {
   const { products } = useSelector((state: RootState) => {
     return state;
   });
+  console.log("products:", products);
+
+  const [searchValue, setSearchValue] = React.useState("");
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+  };
+  const handleClick = () => {
+    dispatch(fetchProductsByNameThunk(searchValue));
+  };
 
   useEffect(() => {
     dispatch(fetchProductsThunk());
@@ -17,8 +29,15 @@ const Home = () => {
   return (
     <>
       <h1>HOME</h1>
+      <input
+        type='text'
+        value={searchValue}
+        placeholder='search your candy ...'
+        onChange={handleChange}
+      />
+      <button onClick={handleClick}>Search</button>
       <ul>
-        {products.items.map((product, index) => (
+        {products.filteredItemsByName.map((product, index) => (
           <li key={index}>
             <h3>{product.name}</h3>
             <p>{product.description}</p>

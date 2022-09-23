@@ -44,4 +44,12 @@ const deleteProduct = async (productId: string): Promise<ProductDocument | null>
   return foundProduct
 }
 
-export default { create, findAll, findById, update, deleteProduct }
+const sortByName = async (sortType: 'asc' | 'desc'): Promise<ProductDocument[]> => {
+  return Product.find().sort({ name: sortType })
+}
+
+const filterByName = async (filterValue: RegExp): Promise<ProductDocument[]> => {
+  return Product.find({ name: { $regex: filterValue } })
+}
+
+export default { create, findAll, findById, update, deleteProduct, sortByName, filterByName }

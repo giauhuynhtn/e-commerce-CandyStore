@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export type Product = {
@@ -12,14 +12,14 @@ export type Product = {
 
 export interface ProductsState {
   items: Product[];
-  filteredItems: Product[];
+  filteredItemsByName: Product[];
   productInfo: Product;
   isLoading: boolean;
 }
 
 const initialState: ProductsState = {
   items: [],
-  filteredItems: [],
+  filteredItemsByName: [],
   productInfo: {
     name: "",
     category: "",
@@ -41,6 +41,16 @@ export const fetchProductInfoThunk = createAsyncThunk(
   }
 );
 
+export const fetchProductsByNameThunk = createAsyncThunk(
+  "productsFilterByName/fetch",
+  async (name: string) => {
+    // const { name } = params;
+    const URL = `http://localhost:4000/api/v1/products/filterByName/${name}`;
+    const response = await axios.get(URL);
+    return { data: response.data, status: response.status };
+  }
+);
+
 export const fetchProductsThunk = createAsyncThunk(
   "products/fetch",
   async () => {
@@ -53,15 +63,7 @@ export const fetchProductsThunk = createAsyncThunk(
 export const productsSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {
-    filteredProducts: (state, action: PayloadAction<string>) => {
-      const filteredProducts = state.items.filter((product) => {
-        const lowerCaseName = product.name.toLocaleLowerCase();
-        return lowerCaseName.includes(action.payload.toLocaleLowerCase());
-      });
-      state.filteredItems = filteredProducts;
-    },
-  },
+  reducers: {},
   extraReducers: (builder: any) => {
     builder.addCase(fetchProductsThunk.pending, (state: any) => {
       state.isLoading = true;
@@ -69,7 +71,6 @@ export const productsSlice = createSlice({
 
     builder.addCase(fetchProductsThunk.fulfilled, (state: any, action: any) => {
       state.items = action.payload.data;
-      state.filteredItems = action.payload.data;
       state.isLoading = false;
     });
 
@@ -81,6 +82,18 @@ export const productsSlice = createSlice({
       fetchProductInfoThunk.fulfilled,
       (state: any, action: any) => {
         state.productInfo = action.payload.data;
+        state.isLoading = false;
+      }
+    );
+
+    builder.addCase(fetchProductsByNameThunk.pending, (state: any) => {
+      state.isLoading = true;
+    });
+
+    builder.addCase(
+      fetchProductsByNameThunk.fulfilled,
+      (state: any, action: any) => {
+        state.filteredItemsByName = action.payload.data;
         state.isLoading = false;
       }
     );

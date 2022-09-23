@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express'
 import Product from '../models/product'
 import productService from '../services/product.service'
 import { BadRequestError } from '../helpers/apiError'
+import escapeRegExp from '../util/escapeRegExp'
 
 // POST /products
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
@@ -25,6 +26,39 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
 export const findAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
     res.json(await productService.findAll())
+  } catch (error) {
+    if (error instanceof Error && error.name === 'ValidationError') {
+      next(new BadRequestError('Invalid request', 400, error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// GET /products/sort/:sortType
+// export const sortByName = async (req: Request, res: Response, next: NextFunction) => {
+//   try {
+//     const type = req.params.sortType
+//     if (type === 'asc' || type === 'desc') {
+//       res.json(await productService.sortByName(type))
+//     }
+//   } catch (error) {
+//     if (error instanceof Error && error.name === 'ValidationError') {
+//       next(new BadRequestError('Invalid request', 400, error))
+//     } else {
+//       next(error)
+//     }
+//   }
+// }
+
+// GET /products/filterByName/:filterValue
+export const filterByName = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // const regexString = escapeRegExp(req.params.filterValue)
+    const regex = new RegExp(req.params.filterValue, 'i')
+    console.log('regex:', regex)
+
+    res.json(await productService.filterByName(regex))
   } catch (error) {
     if (error instanceof Error && error.name === 'ValidationError') {
       next(new BadRequestError('Invalid request', 400, error))
