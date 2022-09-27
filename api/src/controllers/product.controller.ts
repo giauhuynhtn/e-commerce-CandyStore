@@ -68,6 +68,21 @@ export const filterByName = async (req: Request, res: Response, next: NextFuncti
   }
 }
 
+// GET /products/filterByCategory/:filterValue
+export const filterByCategory = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const categoryParam = req.params.filterValue
+
+    res.json(await productService.filterByCategory(categoryParam))
+  } catch (error) {
+    if (error instanceof Error && error.name === 'ValidationError') {
+      next(new BadRequestError('Invalid request', 400, error))
+    } else {
+      next(error)
+    }
+  }
+}
+
 // GET /products/:productId
 export const findById = async (req: Request, res: Response, next: NextFunction) => {
   try {

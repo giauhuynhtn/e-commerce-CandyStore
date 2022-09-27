@@ -52,4 +52,17 @@ const filterByName = async (filterValue: RegExp): Promise<ProductDocument[]> => 
   return Product.find({ name: { $regex: filterValue } })
 }
 
-export default { create, findAll, findById, update, deleteProduct, sortByName, filterByName }
+const filterByCategory = async (filterValue: string): Promise<ProductDocument[]> => {
+  return Product.find({ category: filterValue })
+}
+
+export default {
+  create,
+  findAll,
+  findById,
+  update,
+  deleteProduct,
+  sortByName,
+  filterByName,
+  filterByCategory,
+}
