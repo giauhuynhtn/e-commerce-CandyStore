@@ -42,8 +42,8 @@ const Home = () => {
       />
       <button onClick={handleClick}>Search</button>
       <ul>
-        {renderList.map((product, index) => (
-          <li key={index}>
+        {renderList.map((product) => (
+          <li key={product._id}>
             <h3>{product.name}</h3>
             <p>{product.description}</p>
             <h3>{product.price} Euro/pack</h3>
