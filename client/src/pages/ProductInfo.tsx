@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { fetchProductInfoThunk } from "redux/slices/productsSlice";
+import { fetchProductInfoThunk } from "../services/thunks.services";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AppDispatch, RootState } from "../redux/store";

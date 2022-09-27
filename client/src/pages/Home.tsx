@@ -1,18 +1,22 @@
 import React, { useEffect } from "react";
+import { GoogleLogin } from "@react-oauth/google";
+
 import {
   fetchProductsThunk,
   fetchProductsByNameThunk,
-} from "redux/slices/productsSlice";
+} from "../services/thunks.services";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AppDispatch, RootState } from "../redux/store";
 
 const Home = () => {
+  const handleGoogleOnSuccess = (response: any) => {
+    console.log("response:", response);
+  };
   const dispatch = useDispatch<AppDispatch>();
   const { products } = useSelector((state: RootState) => {
     return state;
   });
-  console.log("products:", products);
 
   const [searchValue, setSearchValue] = React.useState("");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,6 +38,12 @@ const Home = () => {
   return (
     <>
       <h1>HOME</h1>
+      <GoogleLogin
+        onSuccess={handleGoogleOnSuccess}
+        onError={() => {
+          console.log("Login Failed");
+        }}
+      />
       <input
         type='text'
         value={searchValue}
