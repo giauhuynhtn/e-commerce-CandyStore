@@ -6,7 +6,6 @@ import {
   findById,
   updateProduct,
   deleteProduct,
-  // sortByName,
   filterByName,
   filterByCategory,
 } from '../controllers/product.controller'
@@ -17,7 +16,6 @@ const router = express.Router()
 
 router.get('/', checkAuth, findAll)
 router.get('/:productId', findById)
-// router.get('/sort/:sortType', sortByName)
 router.get('/filterByName/:filterValue', filterByName)
 router.get('/filterByCategory/:filterValue', filterByCategory)
 router.post('/', createProduct)

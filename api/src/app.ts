@@ -54,7 +54,6 @@ passport.use(loginWithGoogle())
 app.post(
   '/login',
   (req, res, next) => {
-    console.log('========req:', req)
     next()
   },
   passport.authenticate('google-id-token', { session: false }),
