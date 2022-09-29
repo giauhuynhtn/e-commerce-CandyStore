@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchUsersThunk } from "services/thunks.services";
 
 export type User = {
   firstname: string;
@@ -21,13 +21,6 @@ const initialState: UsersState = {
   isLoading: false,
 };
 
-const path = "http://localhost:4000/api/v1/users";
-
-const fetchUsersThunk = createAsyncThunk("users/fetch", async () => {
-  const response = await axios.get(path);
-  return { data: response.data, status: response.status };
-});
-
 export const usersSlice = createSlice({
   name: "users",
   initialState,
@@ -43,7 +36,5 @@ export const usersSlice = createSlice({
     });
   },
 });
-
-export { fetchUsersThunk };
 
 export default usersSlice.reducer;
