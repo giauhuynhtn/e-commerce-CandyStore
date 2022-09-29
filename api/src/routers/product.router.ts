@@ -11,9 +11,11 @@ import {
   filterByCategory,
 } from '../controllers/product.controller'
 
+import checkAuth from '../middlewares/checkAuth'
+
 const router = express.Router()
 
-router.get('/', findAll)
+router.get('/', checkAuth, findAll)
 router.get('/:productId', findById)
 // router.get('/sort/:sortType', sortByName)
 router.get('/filterByName/:filterValue', filterByName)

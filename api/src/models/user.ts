@@ -4,8 +4,8 @@ export type UserDocument = Document & {
   firstname: string
   lastname: string
   email: string
-  username: string
-  password: string
+  username?: string
+  password?: string
   orders: mongoose.Schema.Types.ObjectId[]
   isBanned: boolean
 }
@@ -34,12 +34,10 @@ const userSchema = new mongoose.Schema({
   },
   username: {
     type: String,
-    required: [true, 'Username required'],
     default: 'username',
   },
   password: {
     type: String,
-    required: true,
   },
   orders: {
     type: [mongoose.Schema.Types.ObjectId],
