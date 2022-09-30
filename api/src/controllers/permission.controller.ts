@@ -1,17 +1,17 @@
 import { Request, Response, NextFunction } from 'express'
 
-import Admin, { AdminDocument } from '../models/admin'
-import adminService from '../services/admin.service'
+import Permission, { PermissionDocument } from '../models/permission'
+import permissionService from '../services/permission.service'
 import { BadRequestError } from '../helpers/apiError'
 
-// POST /admins
-export const createAdmin = async (req: Request, res: Response, next: NextFunction) => {
+// POST /permissions
+export const createPermission = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { firstname, lastname, email, username, password, roles } = req.body
-    const admin = new Admin({ firstname, lastname, email, username, password, roles })
+    const { role, description } = req.body
+    const permission = new Permission({ role, description })
 
-    await adminService.create(admin)
-    res.json(admin)
+    await permissionService.create(permission)
+    res.json(permission)
   } catch (error) {
     if (error instanceof Error && error.name === 'ValidationError') {
       next(new BadRequestError('Invalid request', 400, error))
@@ -21,10 +21,10 @@ export const createAdmin = async (req: Request, res: Response, next: NextFunctio
   }
 }
 
-//  GET /admins
+//  GET /permissions
 export const findAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    res.json(await adminService.findAll())
+    res.json(await permissionService.findAll())
   } catch (error) {
     if (error instanceof Error && error.name === 'ValidationError') {
       next(new BadRequestError('Invalid request', 400, error))
@@ -34,10 +34,10 @@ export const findAll = async (req: Request, res: Response, next: NextFunction) =
   }
 }
 
-// GET /admins/:adminId
+// GET /permissions/:permissionId
 export const findById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    res.json(await adminService.findById(req.params.adminId))
+    res.json(await permissionService.findById(req.params.permissionId))
   } catch (error) {
     if (error instanceof Error && error.name === 'ValidationError') {
       next(new BadRequestError('Invalid request', 400, error))
@@ -47,13 +47,13 @@ export const findById = async (req: Request, res: Response, next: NextFunction) 
   }
 }
 
-// PUT /admins/:adminId
-export const updateAdmin = async (req: Request, res: Response, next: NextFunction) => {
+// PUT /permissions/:permissionId
+export const updatePermission = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const update = req.body
-    const adminId = req.params.adminId
-    const updatedAdmin = await adminService.update(adminId, update)
-    res.json(updatedAdmin)
+    const permissionId = req.params.permissionId
+    const updatedPermission = await permissionService.update(permissionId, update)
+    res.json(updatedPermission)
   } catch (error) {
     if (error instanceof Error && error.name === 'ValidationError') {
       next(new BadRequestError('Invalid Request', 400, error))
@@ -63,10 +63,10 @@ export const updateAdmin = async (req: Request, res: Response, next: NextFunctio
   }
 }
 
-// DELETE /admins/:adminId
-export const deleteAdmin = async (req: Request, res: Response, next: NextFunction) => {
+// DELETE /permissions/:permissionId
+export const deletePermission = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await adminService.deleteAdmin(req.params.adminId)
+    await permissionService.deletePermission(req.params.permissionId)
     res.status(204).end()
   } catch (error) {
     if (error instanceof Error && error.name === 'ValidationError') {
@@ -76,7 +76,3 @@ export const deleteAdmin = async (req: Request, res: Response, next: NextFunctio
     }
   }
 }
-
-// POST /admins/products
-// PUT /admins/:productId
-// DELETE /admins/:productId

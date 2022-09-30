@@ -10,7 +10,7 @@ import apiContentType from './middlewares/apiContentType'
 import productRouter from './routers/product.router'
 import userRouter from './routers/user.router'
 import orderRouter from './routers/order.router'
-import adminRouter from './routers/admin.router'
+import permissionRouter from './routers/permission.router'
 import passport from 'passport'
 
 import loginWithGoogle from '../src/passport/google'
@@ -75,7 +75,7 @@ app.post(
 app.use('/api/v1/products', productRouter)
 app.use('/api/v1/users', userRouter)
 app.use('/api/v1/orders', orderRouter)
-app.use('/api/v1/admins', adminRouter)
+app.use('/api/v1/permissions', permissionRouter)
 
 // Custom API error handler
 app.use(apiErrorHandler)
