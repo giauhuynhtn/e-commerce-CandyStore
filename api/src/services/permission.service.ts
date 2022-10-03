@@ -33,21 +33,6 @@ const update = async (
   return foundPermission
 }
 
-const updateOne = async (
-  permissionId: string,
-  update: Partial<PermissionDocument>
-): Promise<PermissionDocument | null> => {
-  const foundPermission = await Permission.findById(permissionId)
-
-  if (!foundPermission) {
-    throw new NotFoundError(`Permission ${permissionId} does not exist`)
-  }
-
-  await Permission.updateOne({ _id: permissionId }, { $push: update })
-
-  return foundPermission
-}
-
 const deletePermission = async (permissionId: string): Promise<PermissionDocument | null> => {
   const foundPermission = await Permission.findByIdAndDelete(permissionId)
 
@@ -58,4 +43,4 @@ const deletePermission = async (permissionId: string): Promise<PermissionDocumen
   return foundPermission
 }
 
-export default { create, findAll, findById, update, deletePermission, updateOne }
+export default { create, findAll, findById, update, deletePermission }

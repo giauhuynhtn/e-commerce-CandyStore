@@ -7,7 +7,7 @@ export type PermissionDocument = Document & {
 
 const permissionSchema = new mongoose.Schema({
   role: {
-    type: Date,
+    type: String,
     required: true,
   },
   description: {
@@ -15,4 +15,4 @@ const permissionSchema = new mongoose.Schema({
   },
 })
 
-export default mongoose.model<PermissionDocument>('Role', permissionSchema)
+export default mongoose.model<PermissionDocument>('Permission', permissionSchema)

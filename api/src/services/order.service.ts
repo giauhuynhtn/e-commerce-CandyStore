@@ -6,7 +6,7 @@ const create = async (order: OrderDocument): Promise<OrderDocument> => {
 }
 
 const findAll = async (): Promise<OrderDocument[]> => {
-  return Order.find()
+  return Order.find().populate('products')
 }
 
 const findById = async (orderId: string): Promise<OrderDocument> => {

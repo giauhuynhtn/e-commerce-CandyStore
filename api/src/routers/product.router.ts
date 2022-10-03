@@ -14,7 +14,8 @@ import checkAuth from '../middlewares/checkAuth'
 
 const router = express.Router()
 
-router.get('/', checkAuth, findAll)
+// router.get('/', checkAuth, findAll)
+router.get('/', findAll)
 router.get('/:productId', findById)
 router.get('/filterByName/:filterValue', filterByName)
 router.get('/filterByCategory/:filterValue', filterByCategory)

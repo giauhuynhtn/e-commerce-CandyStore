@@ -52,7 +52,7 @@ passport.use(loginWithGoogle())
 
 // Set up routers
 app.post(
-  '/login',
+  '/api/v1/login',
   (req, res, next) => {
     next()
   },
