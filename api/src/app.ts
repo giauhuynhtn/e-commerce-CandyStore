@@ -51,6 +51,7 @@ app.use(passport.initialize())
 passport.use(loginWithGoogle())
 
 // Set up routers
+
 app.post(
   '/api/v1/login',
   (req, res, next) => {
@@ -63,6 +64,9 @@ app.post(
     const token = jwt.sign(
       {
         userId: user._id,
+        permission: user.permission,
+        banStatus: user.isBanned,
+        isAdmin: user.isAdmin,
       },
       JWT_SECRET,
       {

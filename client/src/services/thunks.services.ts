@@ -32,11 +32,18 @@ const fetchProductsByCategoryThunk = createAsyncThunk(
   }
 );
 
-const fetchProductsThunk = createAsyncThunk("products/fetch", async () => {
-  const URL = `${path}/products`;
-  const response = await axios.get(URL);
-  return { data: response.data, status: response.status };
-});
+const fetchProductsThunk = createAsyncThunk(
+  "products/fetch",
+  async (token: string) => {
+    const URL = `${path}/products`;
+    const response = await axios.get(URL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return { data: response.data, status: response.status };
+  }
+);
 
 // User thunks
 

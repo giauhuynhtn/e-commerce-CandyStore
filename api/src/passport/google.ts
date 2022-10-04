@@ -11,7 +11,9 @@ export default function () {
     },
     async (parsedToken: ParsedToken, googleId: string, done: VerifiedCallback) => {
       try {
-        let user: any = await User.findOne({ email: parsedToken.payload.email })
+        const email = parsedToken.payload.email
+        let user: any = await User.findOne({ email })
+
         if (!user) {
           user = new User({
             email: parsedToken.payload.email,
@@ -20,6 +22,7 @@ export default function () {
           })
           user.save()
         }
+
         done(null, user)
       } catch (error) {
         done(error)

@@ -7,7 +7,8 @@ export type UserDocument = Document & {
   username?: string
   password?: string
   orders: mongoose.Schema.Types.ObjectId[]
-  permission: mongoose.Schema.Types.ObjectId[]
+  isAdmin: boolean
+  permission: mongoose.Schema.Types.ObjectId
   isBanned: boolean
 }
 
@@ -44,10 +45,14 @@ const userSchema = new mongoose.Schema({
     ref: 'Order',
   },
   permission: {
-    type: [mongoose.Schema.Types.ObjectId],
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Permission',
   },
-  isbanned: {
+  isBanned: {
+    type: String,
+    default: false,
+  },
+  isAdmin: {
     type: String,
     default: false,
   },
