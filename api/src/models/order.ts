@@ -6,6 +6,7 @@ export type OrderDocument = Document & {
   returnDate: Date
   products: mongoose.Schema.Types.ObjectId[]
   userId: mongoose.Schema.Types.ObjectId
+  status: 'pending' | 'delivered' | 'returned' | 'cancelled'
 }
 
 const orderSchema = new mongoose.Schema({
@@ -27,6 +28,10 @@ const orderSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
+  },
+  status: {
+    type: String,
+    default: 'pending',
   },
 })
 
