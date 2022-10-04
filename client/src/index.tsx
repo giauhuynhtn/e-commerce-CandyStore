@@ -12,13 +12,13 @@ const container = document.getElementById("root")!;
 const root = createRoot(container);
 
 root.render(
-  <React.StrictMode>
-    <GoogleOAuthProvider clientId='519921203783-cecbu4hi55mo8g9b74qpj9p21a8hd39a.apps.googleusercontent.com'>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </GoogleOAuthProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <GoogleOAuthProvider clientId='519921203783-cecbu4hi55mo8g9b74qpj9p21a8hd39a.apps.googleusercontent.com'>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </GoogleOAuthProvider>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
