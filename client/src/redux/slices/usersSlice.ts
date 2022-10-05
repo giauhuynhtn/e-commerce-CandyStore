@@ -2,13 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 import { fetchUsersThunk } from "services/thunks.services";
 
 export type User = {
+  id: string;
   firstname: string;
-  lastname: string;
-  email: string;
+  isBanned: boolean;
+  permission: string;
+  isAdmin: boolean;
+  orders: string[];
+  lastname?: string;
+  email?: string;
   username?: string;
   password?: string;
-  orders: string[];
-  isBanned: boolean;
 };
 
 export interface UsersState {

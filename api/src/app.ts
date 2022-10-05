@@ -1,7 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
-import jwt from 'jsonwebtoken'
+// import jwt from 'jsonwebtoken'
 // import session from 'express-session'
 // import cookieParser from 'cookie-parser'
 
@@ -10,11 +10,12 @@ import apiContentType from './middlewares/apiContentType'
 import productRouter from './routers/product.router'
 import userRouter from './routers/user.router'
 import orderRouter from './routers/order.router'
+import privateRouter from './routers/private.router'
 import permissionRouter from './routers/permission.router'
 import passport from 'passport'
 
 import loginWithGoogle from '../src/passport/google'
-import { JWT_SECRET } from './util/secrets'
+// import { JWT_SECRET } from './util/secrets'
 
 dotenv.config({ path: '.env' })
 const app = express()
@@ -52,30 +53,7 @@ passport.use(loginWithGoogle())
 
 // Set up routers
 
-app.post(
-  '/api/v1/login',
-  (req, res, next) => {
-    next()
-  },
-  passport.authenticate('google-id-token', { session: false }),
-  (req, res) => {
-    const user: any = req.user
-
-    const token = jwt.sign(
-      {
-        userId: user._id,
-        permission: user.permission,
-        banStatus: user.isBanned,
-        isAdmin: user.isAdmin,
-      },
-      JWT_SECRET,
-      {
-        expiresIn: '1h',
-      }
-    )
-    res.json({ msg: 'done', user: req.user, token })
-  }
-)
+app.use('/api/v1/login', privateRouter)
 app.use('/api/v1/products', productRouter)
 app.use('/api/v1/users', userRouter)
 app.use('/api/v1/orders', orderRouter)
