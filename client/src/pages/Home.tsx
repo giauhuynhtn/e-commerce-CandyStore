@@ -9,6 +9,7 @@ import { AppDispatch } from "../redux/store";
 import ProductCard from "../components/ProductCard";
 import MenuBar from "../components/MenuBar";
 import SearchBox from "../components/SearchBox";
+import FilterByCategory from "../components/FilterByCategory";
 import { RootState } from "../redux/store";
 import { fetchProductsThunk } from "../services/thunks.services";
 
@@ -41,9 +42,9 @@ const Home = () => {
   });
 
   const renderList =
-    products.filteredItemsByName.length === 0
+    products.filteredItems.length === 0
       ? products.items
-      : products.filteredItemsByName;
+      : products.filteredItems;
 
   return (
     <Container
@@ -56,6 +57,7 @@ const Home = () => {
       <MenuBar />
 
       <SearchBox />
+      <FilterByCategory />
 
       <Paper sx={{ width: "100%" }}>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>

@@ -19,16 +19,14 @@ export type Product = {
 
 export interface ProductsState {
   items: Product[];
-  filteredItemsByName: Product[];
-  filteredItemsByCategory: Product[];
+  filteredItems: Product[];
   productInfo: Product;
   isLoading: boolean;
 }
 
 const initialState: ProductsState = {
   items: [],
-  filteredItemsByName: [],
-  filteredItemsByCategory: [],
+  filteredItems: [],
   productInfo: {
     _id: "",
     name: "",
@@ -69,7 +67,7 @@ export const productsSlice = createSlice({
     });
 
     builder.addCase(fetchProductsByNameThunk.fulfilled, (state, action) => {
-      state.filteredItemsByName = action.payload.data;
+      state.filteredItems = action.payload.data;
       state.isLoading = false;
     });
 
@@ -78,7 +76,7 @@ export const productsSlice = createSlice({
     });
 
     builder.addCase(fetchProductsByCategoryThunk.fulfilled, (state, action) => {
-      state.filteredItemsByCategory = action.payload.data;
+      state.filteredItems = action.payload.data;
       state.isLoading = false;
     });
   },
