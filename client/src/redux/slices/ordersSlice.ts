@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchOrdersThunk, fetchUsersThunk } from "services/thunks.services";
+import { fetchOrdersThunk } from "services/thunks.services";
 
 export type Order = {
   orderDate: Date;

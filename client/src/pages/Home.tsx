@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import { useDispatch, useSelector } from "react-redux";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 
 import {
   fetchProductsThunk,
   fetchProductsByNameThunk,
 } from "../services/thunks.services";
-import { useDispatch, useSelector } from "react-redux";
-
+import ProductCard from "../components/ProductCard";
 import { AppDispatch, RootState } from "../redux/store";
 
 // interface CredentialResponse {
@@ -94,8 +97,13 @@ const Home = () => {
       : products.filteredItemsByName;
 
   return (
-    <>
-      <h1>Shopping page</h1>
+    <Container
+      sx={{
+        backgroundColor: "pink",
+        maxWidth: "1400",
+        margin: "0",
+        padding: "0",
+      }}>
       <GoogleLogin
         onSuccess={handleGoogleOnSuccess}
         onError={() => {
@@ -109,22 +117,16 @@ const Home = () => {
         onChange={handleChangeSearchValue}
       />
       <button onClick={handleClick}>Search</button>
-      {/* <button onClick={handleGetProducts}>Fetch product</button> */}
-      <ul>
-        {renderList.map((product) => (
-          <li key={product._id}>
-            <h3>{product.name}</h3>
-            <h3>{product.price} Euro/pack</h3>
-            <p>{product.quantity} packs left</p>
-            <img
-              src={product.img}
-              alt={product.name}
-              style={{ width: "100px" }}
-            />
-          </li>
-        ))}
-      </ul>
-    </>
+      <Box sx={{ width: "100%" }}>
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          {renderList.map((item) => (
+            <Grid item xs={3}>
+              <ProductCard product={item} key={item._id} />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    </Container>
   );
 };
 
