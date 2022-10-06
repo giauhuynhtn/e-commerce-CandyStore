@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { fetchProductInfoThunk } from "../services/thunks.services";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AppDispatch, RootState } from "../redux/store";
 import { useParams } from "react-router-dom";
+import { addCartItem } from "redux/slices/cartSlice";
+import MenuBar from "components/MenuBar";
 
 const ProductInfo = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,8 +19,23 @@ const ProductInfo = () => {
     dispatch(fetchProductInfoThunk({ id: productId }));
   }, [dispatch, productId]);
 
+  const [quantity, setQuantity] = useState("");
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQuantity(event.target.value);
+  };
+
+  const handleAdd = () => {
+    dispatch(
+      addCartItem({
+        product: products.productInfo,
+        quantity: Number(quantity),
+      })
+    );
+  };
+
   return (
     <>
+      <MenuBar />
       <h1>Product Information</h1>
       <h3>{products.productInfo.name}</h3>
       <p>{products.productInfo.description}</p>
@@ -27,8 +44,10 @@ const ProductInfo = () => {
       <img
         src={products.productInfo.img}
         alt={products.productInfo.name}
-        style={{ width: "100px" }}
+        style={{ width: "300px" }}
       />
+      <input value={quantity} onChange={handleChange}></input>
+      <button onClick={handleAdd}>ADD</button>
     </>
   );
 };

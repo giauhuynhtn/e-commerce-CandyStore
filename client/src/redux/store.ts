@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import ordersSlice from "./slices/ordersSlice";
 import productsSlice from "./slices/productsSlice";
 import usersSlice from "./slices/usersSlice";
+import cartSlice from "./slices/cartSlice";
 import currentUserSlice from "./slices/currentUserSlice";
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
     users: usersSlice,
     currentUser: currentUserSlice,
     orders: ordersSlice,
+    cartList: cartSlice,
   },
 });
 

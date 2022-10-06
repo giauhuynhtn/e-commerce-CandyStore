@@ -7,8 +7,11 @@ import { GoogleLogin } from "@react-oauth/google";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 
-import { AppDispatch } from "../redux/store";
-import { setCurrentUser, CurrentUser } from "../redux/slices/currentUserSlice";
+import { AppDispatch } from "../../redux/store";
+import {
+  setCurrentUser,
+  CurrentUser,
+} from "../../redux/slices/currentUserSlice";
 
 export default function LoginDrawer() {
   const [state, setState] = React.useState(false);
@@ -32,6 +35,7 @@ export default function LoginDrawer() {
   useEffect(() => {
     const token = localStorage.getItem("token") || "";
     const decoded = jwt_decode(token) as CurrentUser;
+    console.log("decoded current user:", decoded);
     dispatch(setCurrentUser(decoded));
     setToken(token);
   }, [dispatch, token]);

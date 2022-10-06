@@ -6,10 +6,15 @@ import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import AdbIcon from "@mui/icons-material/Adb";
+import { useNavigate } from "react-router-dom";
 
-import LoginDrawer from "./LoginDrawer";
+import Cart from "./Cart";
+
+import LoginDrawer from "../LoginDrawer";
 
 const MenuBar = () => {
+  let navigate = useNavigate();
+
   return (
     <AppBar position='static'>
       <Container maxWidth='xl'>
@@ -19,7 +24,9 @@ const MenuBar = () => {
             variant='h6'
             noWrap
             component='a'
-            href='/'
+            onClick={() => {
+              navigate("/");
+            }}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -55,6 +62,7 @@ const MenuBar = () => {
               <LoginDrawer />
             </IconButton>
           </Box>
+          <Cart />
         </Toolbar>
       </Container>
     </AppBar>

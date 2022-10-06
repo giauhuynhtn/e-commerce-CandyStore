@@ -6,8 +6,8 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 
-import { fetchProductsByNameThunk } from "../services/thunks.services";
-import { AppDispatch } from "../redux/store";
+import { fetchProductsByNameThunk } from "../../services/thunks.services";
+import { AppDispatch } from "../../redux/store";
 
 export default function SearchBox() {
   const dispatch = useDispatch<AppDispatch>();

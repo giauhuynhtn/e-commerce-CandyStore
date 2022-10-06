@@ -7,9 +7,9 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import { useDispatch } from "react-redux";
 
-import { AppDispatch } from "../redux/store";
+import { AppDispatch } from "../../redux/store";
 
-import { fetchProductsByCategoryThunk } from "../services/thunks.services";
+import { fetchProductsByCategoryThunk } from "../../services/thunks.services";
 
 const categories = [
   "gummy",
@@ -41,8 +41,10 @@ export default function FilterByCategory() {
           value={value}
           label='Category'
           onChange={handleChange}>
-          {categories.map((category) => (
-            <MenuItem value={category}>{category}</MenuItem>
+          {categories.map((category, index) => (
+            <MenuItem value={category} key={index}>
+              {category}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>

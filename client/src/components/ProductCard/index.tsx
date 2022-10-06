@@ -6,14 +6,17 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Product } from "redux/slices/productsSlice";
+import { useNavigate } from "react-router-dom";
 
 type ProductObj = {
   product: Product;
 };
 
 function ProductCard({ product }: ProductObj) {
+  let navigate = useNavigate();
+
   return (
-    <Card sx={{ maxWidth: 280 }}>
+    <Card sx={{ maxWidth: 280, height: 450 }}>
       <CardMedia
         component='img'
         height='260'
@@ -24,7 +27,7 @@ function ProductCard({ product }: ProductObj) {
         <Typography
           gutterBottom
           component='div'
-          sx={{ fontSize: "12px", marginTop: "20px" }}>
+          sx={{ fontSize: "12px", marginTop: "20px", height: 40 }}>
           {product.name}
         </Typography>
         <Typography
@@ -34,7 +37,13 @@ function ProductCard({ product }: ProductObj) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size='small'>View</Button>
+        <Button
+          size='small'
+          onClick={() => {
+            navigate(`/product/${product._id}/`);
+          }}>
+          View
+        </Button>
       </CardActions>
     </Card>
   );
