@@ -3,9 +3,9 @@ import { Box, ThemeProvider, createTheme } from "@mui/system";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import CardMedia from "@mui/material/CardMedia";
+import { useNavigate } from "react-router-dom";
 import { CurrentUser, setCurrentUser } from "../redux/slices/usersSlice";
 import jwt_decode from "jwt-decode";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 
@@ -53,8 +53,10 @@ export default function Login() {
 
   useEffect(() => {
     const storageToken = localStorage.getItem("candy-store-token") || "";
-    const decoded = jwt_decode(storageToken) as CurrentUser;
-    dispatch(setCurrentUser(decoded));
+    if (storageToken !== "") {
+      const decoded = jwt_decode(storageToken) as CurrentUser;
+      dispatch(setCurrentUser(decoded));
+    }
   }, [dispatch, userToken]);
 
   const { users } = useSelector((state: RootState) => {

@@ -43,6 +43,9 @@ export const cartSlice = createSlice({
 
       state.items = updatedCartList;
     },
+    resetCart: (state) => {
+      state.items = [];
+    },
     openCart: (state) => {
       state.isOpening = true;
     },
@@ -58,6 +61,7 @@ export const {
   updateCartItem,
   openCart,
   closeCart,
+  resetCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

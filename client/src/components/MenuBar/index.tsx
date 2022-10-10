@@ -13,12 +13,18 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Divider from "@mui/joy/Divider";
 import Button from "@mui/material/Button";
+import { useDispatch } from "react-redux";
 
+import { AppDispatch } from "../../redux/store";
 import Cart from "./Cart";
 import { RootState } from "redux/store";
 import Can from "services/rbacAuth/Can";
+import { setCurrentUser } from "redux/slices/usersSlice";
+import { resetCart } from "redux/slices/cartSlice";
 
 const MenuBar = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
   let navigate = useNavigate();
   const { users } = useSelector((state: RootState) => {
     return state;
@@ -36,8 +42,30 @@ const MenuBar = () => {
   };
 
   const handleUserMenuClose = () => {
-    // dispatch(closeCart());
     setAnchorUserMenu(null);
+  };
+
+  const handleLogout = () => {
+    //reset currentUser state
+    const noUser = {
+      userId: "",
+      firstname: "",
+      permission: "",
+      banStatus: "",
+      isAdmin: "",
+      orders: [],
+      iat: 0,
+      exp: 0,
+    };
+    dispatch(setCurrentUser(noUser));
+    //close userMenu
+    setAnchorUserMenu(null);
+    //reset cartSlice
+    dispatch(resetCart());
+    //remove local storage token
+    localStorage.setItem("candy-store-token", "");
+    //go go frontpage
+    navigate("/");
   };
 
   const isMenuOpen = Boolean(anchorUserMenu);
@@ -107,7 +135,7 @@ const MenuBar = () => {
 
         <MenuItem>
           <Container
-            onClick={() => {}}
+            onClick={handleLogout}
             sx={{
               flexGrow: 1,
               fontSize: 22,
@@ -140,7 +168,6 @@ const MenuBar = () => {
             <Button
               sx={{
                 mr: 2,
-                // flexGrow: 1,
                 fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
@@ -150,29 +177,7 @@ const MenuBar = () => {
               onClick={() => navigate("/home")}>
               CANDY
             </Button>
-
-            <Button
-              // sx={{
-              //   mr: 2,
-              //   // flexGrow: 1,
-              //   fontFamily: "monospace",
-              //   fontWeight: 700,
-              //   letterSpacing: ".3rem",
-              //   color: "#00897b",
-              //   textDecoration: "none",
-              // }}
-              onClick={() => navigate("/")}>
-              Another account
-            </Button>
           </Box>
-
-          {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} /> */}
-
-          {/* <Can
-            role={users.currentUser.isAdmin === "true" ? "admin" : "user"}
-            perform='products:get'
-            yes={() => <button onClick={handleGoToDashboard}>DASHBOARD</button>}
-          /> */}
 
           {users.currentUser.firstname === "" ? (
             <IconButton
