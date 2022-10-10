@@ -1,9 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-// import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Badge from "@mui/material/Badge";
@@ -12,12 +10,12 @@ import MenuItem from "@mui/material/MenuItem";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-import { AppDispatch, RootState } from "../../redux/store";
+import { AppDispatch, RootState } from "../../../redux/store";
 import {
   closeCart,
   openCart,
   removeCartItem,
-} from "../../redux/slices/cartSlice";
+} from "../../../redux/slices/cartSlice";
 import { Container } from "@mui/material";
 
 function Cart() {
@@ -101,7 +99,7 @@ function Cart() {
               );
             })}
 
-            <MenuItem>Check out</MenuItem>
+            <MenuItem onClick={() => navigate("/checkout")}>Check out</MenuItem>
           </>
         ) : (
           <Typography>Empty cart</Typography>
