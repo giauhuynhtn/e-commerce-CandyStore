@@ -9,7 +9,6 @@ import Divider from "@mui/joy/Divider";
 import Menu from "@mui/material/Menu";
 import Face2Icon from "@mui/icons-material/Face2";
 import IconButton from "@mui/material/IconButton";
-import Stack from "@mui/material/Stack";
 
 import Can from "services/rbacAuth/Can";
 import { AppDispatch } from "../../../redux/store";
