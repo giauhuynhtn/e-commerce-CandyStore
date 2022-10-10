@@ -4,8 +4,9 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Button from "@mui/material/Button";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { useDispatch } from "react-redux";
+import IconButton from "@mui/material/IconButton";
 
 import { AppDispatch } from "../../redux/store";
 
@@ -32,9 +33,17 @@ export default function FilterByCategory() {
   };
 
   return (
-    <Box sx={{ minWidth: 320 }}>
-      <FormControl sx={{ minWidth: 220 }}>
-        <InputLabel id='filter-by-category'>Category</InputLabel>
+    <Box
+      sx={{
+        p: "2px 4px",
+        display: "flex",
+        alignItems: "center",
+        minWidth: 400,
+      }}>
+      <FormControl sx={{ minWidth: 348 }}>
+        <InputLabel id='filter-by-category' sx={{ color: "#00897b" }}>
+          Category
+        </InputLabel>
         <Select
           labelId='filter-by-category'
           id='category-select'
@@ -48,7 +57,13 @@ export default function FilterByCategory() {
           ))}
         </Select>
       </FormControl>
-      <Button onClick={handleFilterByCategory}>Filter</Button>
+      <IconButton
+        type='button'
+        sx={{ p: "10px" }}
+        aria-label='search'
+        onClick={handleFilterByCategory}>
+        <FilterAltIcon />
+      </IconButton>
     </Box>
   );
 }

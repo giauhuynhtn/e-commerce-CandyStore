@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchProductInfoThunk } from "../services/thunks.services";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { AppDispatch, RootState } from "../redux/store";
 import { useParams } from "react-router-dom";
@@ -8,6 +9,7 @@ import { addCartItem } from "redux/slices/cartSlice";
 import MenuBar from "components/MenuBar";
 
 const ProductInfo = () => {
+  let navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { products } = useSelector((state: RootState) => {
     return state;
@@ -48,6 +50,7 @@ const ProductInfo = () => {
       />
       <input value={quantity} onChange={handleChange}></input>
       <button onClick={handleAdd}>ADD</button>
+      <button onClick={() => navigate("/home")}>BACK</button>
     </>
   );
 };

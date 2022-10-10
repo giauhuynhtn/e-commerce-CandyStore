@@ -16,10 +16,10 @@ function ProductCard({ product }: ProductObj) {
   let navigate = useNavigate();
 
   return (
-    <Card sx={{ maxWidth: 280, height: 450 }}>
+    <Card sx={{ maxWidth: 220, height: 380 }}>
       <CardMedia
         component='img'
-        height='260'
+        height='220'
         image={product.img}
         alt={product.name}
       />
@@ -27,12 +27,12 @@ function ProductCard({ product }: ProductObj) {
         <Typography
           gutterBottom
           component='div'
-          sx={{ fontSize: "12px", marginTop: "20px", height: 40 }}>
+          sx={{ fontSize: "12px", marginTop: "10px", height: 40 }}>
           {product.name}
         </Typography>
         <Typography
           component='div'
-          sx={{ fontSize: "14px", marginTop: "20px" }}>
+          sx={{ fontSize: "14px", marginTop: "10px" }}>
           {product.price} eur/pack
         </Typography>
       </CardContent>

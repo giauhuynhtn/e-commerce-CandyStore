@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
 
 import { AppDispatch } from "../redux/store";
 import ProductCard from "../components/ProductCard";
@@ -12,7 +12,15 @@ import SearchBox from "../components/SearchBox";
 import FilterByCategory from "../components/FilterByCategory";
 import { RootState } from "../redux/store";
 import { fetchProductsThunk } from "../services/thunks.services";
+import { styled } from "@mui/material/styles";
 
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
 // interface CredentialResponse {
 //   /** This field is the returned ID token */
 //   credential?: string;
@@ -32,14 +40,15 @@ import { fetchProductsThunk } from "../services/thunks.services";
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const token = localStorage.getItem("token") || "";
+  const token = localStorage.getItem("candy-store-token") || "";
   useEffect(() => {
     dispatch(fetchProductsThunk(token));
   }, [dispatch, token]);
 
-  const { products } = useSelector((state: RootState) => {
+  const { products, users } = useSelector((state: RootState) => {
     return state;
   });
+  console.log("currentUser:", users.currentUser);
 
   const renderList =
     products.filteredItems.length === 0
@@ -49,15 +58,26 @@ const Home = () => {
   return (
     <Container
       sx={{
-        backgroundColor: "rgb(240, 219, 222)",
+        backgroundColor: "#e0f7fa",
         maxWidth: "1400",
-        margin: "0",
         padding: "0",
+        margin: "auto",
       }}>
       <MenuBar />
 
-      <SearchBox />
-      <FilterByCategory />
+      <Stack
+        direction='row'
+        spacing={2}
+        sx={{ margin: "20px" }}
+        alignItems='center'
+        justifyContent='center'>
+        <Item>
+          <SearchBox />
+        </Item>
+        <Item>
+          <FilterByCategory />
+        </Item>
+      </Stack>
 
       <Paper sx={{ width: "100%" }}>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>

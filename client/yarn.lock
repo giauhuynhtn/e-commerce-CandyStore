@@ -7567,6 +7567,11 @@ raw-body@2.5.1:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
+rbacjs@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/rbacjs/-/rbacjs-2.0.3.tgz#f6db512d976e40d32a224cc53633737388e6d3c0"
+  integrity sha512-Qpvuh8f5jUHXmPOlQ9usDyNoSAKBTqlDjk1BALSIR9qMd91lb+uOWqzBq3zD26qunHSGH9vN9tq501h05PgPig==
+
 react-app-polyfill@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-app-polyfill/-/react-app-polyfill-3.0.0.tgz#95221e0a9bd259e5ca6b177c7bb1cb6768f68fd7"

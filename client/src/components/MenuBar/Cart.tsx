@@ -11,7 +11,6 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import Divider from "@mui/joy/Divider";
 
 import { AppDispatch, RootState } from "../../redux/store";
 import {
@@ -62,42 +61,51 @@ function Cart() {
       sx={{ top: 40, right: 0 }}>
       <Box sx={{ minWidth: 300, flexGrow: 1 }}>
         {cartList.items.length > 0 ? (
-          cartList.items.map((item) => {
-            return (
-              <MenuItem key={item.product._id}>
-                <Container
-                  onClick={() => {
-                    navigate(`/product/${item.product._id}/`);
-                  }}
-                  sx={{
-                    flexGrow: 1,
-                    fontSize: 22,
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                  }}>
-                  <Typography sx={{ fontSize: 14, marginRight: 2 }}>
-                    {item.product.name}
-                  </Typography>
-                  <Typography sx={{ fontSize: 12 }}>
-                    Qnt: {item.quantity}
-                  </Typography>
-                </Container>
+          <>
+            {cartList.items.map((item) => {
+              return (
+                <MenuItem key={item.product._id}>
+                  <Container
+                    onClick={() => {
+                      navigate(`/product/${item.product._id}/`);
+                    }}
+                    sx={{
+                      flexGrow: 1,
+                      fontSize: 22,
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                    }}>
+                    <img
+                      src={item.product.img}
+                      alt={item.product.name}
+                      width='28px'
+                      style={{ marginRight: "10px" }}
+                    />
+                    <Typography
+                      sx={{ flexGrow: 1, fontSize: 14, marginRight: 2 }}>
+                      {item.product.name}
+                    </Typography>
+                    <Typography sx={{ fontSize: 12 }}>
+                      Qnt: {item.quantity}
+                    </Typography>
+                  </Container>
 
-                <IconButton
-                  size='large'
-                  color='inherit'
-                  onClick={() => dispatch(removeCartItem(item))}>
-                  <DeleteOutlineIcon spacing={40} sx={{ left: 0 }} />
-                </IconButton>
-              </MenuItem>
-            );
-          })
+                  <IconButton
+                    size='large'
+                    color='inherit'
+                    onClick={() => dispatch(removeCartItem(item))}>
+                    <DeleteOutlineIcon spacing={40} sx={{ left: 0 }} />
+                  </IconButton>
+                </MenuItem>
+              );
+            })}
+
+            <MenuItem>Check out</MenuItem>
+          </>
         ) : (
           <Typography>Empty cart</Typography>
         )}
-        <Divider orientation='horizontal' />
-        <MenuItem>Check out</MenuItem>
       </Box>
     </Menu>
   );
@@ -113,7 +121,7 @@ function Cart() {
           color='inherit'
           onClick={handleCartOpen}>
           <Badge badgeContent={cartList.items.length} color='error'>
-            <ShoppingCartIcon />
+            <ShoppingCartIcon sx={{ color: "#00897b" }} />
           </Badge>
         </IconButton>
       </Box>
