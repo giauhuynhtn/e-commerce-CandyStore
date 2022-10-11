@@ -8,8 +8,7 @@ import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 
-import { RootState } from "../redux/store";
-import MenuBar from "components/MenuBar";
+import { RootState } from "../../redux/store";
 
 function ProductsDashboard() {
   const { products } = useSelector((state: RootState) => {
@@ -17,10 +16,8 @@ function ProductsDashboard() {
   });
 
   const handleEditproduct = () => {};
-
   return (
     <>
-      <MenuBar />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label='countries table'>
           <TableHead>

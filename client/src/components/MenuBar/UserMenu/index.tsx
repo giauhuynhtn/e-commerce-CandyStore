@@ -24,7 +24,7 @@ function UserMenu() {
   });
 
   const handleGoToDashboard = () => {
-    navigate("/products/dashboard/");
+    navigate("/admin/dashboard/");
   };
 
   const [anchorUserMenu, setAnchorUserMenu] =

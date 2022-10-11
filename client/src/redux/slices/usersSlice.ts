@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchUsersThunk } from "services/thunks.services";
 
 export type User = {
-  id: string;
+  _id: string;
   firstname: string;
   isBanned: boolean;
   permission: string;

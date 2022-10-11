@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "pages/Home";
 import ProductInfo from "pages/ProductInfo";
-import ProductsDashboard from "pages/ProductsDashboard";
+import Dashboard from "pages/Dashboard";
 import Login from "pages/Login";
 import Checkout from "pages/Checkout";
 
@@ -13,7 +13,7 @@ const App = () => {
         <Route path='/home' element={<Home />} />
         <Route path='/checkout' element={<Checkout />} />
         <Route path='/product/:productId' element={<ProductInfo />} />
-        <Route path='/products/dashboard' element={<ProductsDashboard />} />
+        <Route path='/admin/dashboard' element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );
