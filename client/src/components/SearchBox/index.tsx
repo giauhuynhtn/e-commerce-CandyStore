@@ -40,7 +40,8 @@ export default function SearchBox() {
         type='text'
         value={searchValue}
         onChange={handleChangeSearchValue}
-        sx={{ ml: 1, flex: 1, lableColor: "#00897b" }}
+        // lableColor= "#00897b"
+        sx={{ ml: 1, flex: 1 }}
         inputProps={{ "aria-label": "search candy" }}
       />
       <IconButton

@@ -10,14 +10,53 @@ import Button from "@mui/material/Button";
 import { TableCell, TableHead, TableRow } from "@mui/material";
 
 import MenuBar from "components/MenuBar";
-import { removeCartItem } from "redux/slices/cartSlice";
+import { removeCartItem, resetCart } from "redux/slices/cartSlice";
+import axios from "axios";
 
 function Checkout() {
   const dispatch = useDispatch<AppDispatch>();
-  const { cartList } = useSelector((state: RootState) => {
+  const { cartList, products, users } = useSelector((state: RootState) => {
     return state;
   });
   console.log("cartList:", cartList);
+  const baseURL = "http://localhost:4000/api/v1";
+
+  const handlePayment = async () => {
+    // update quantity of Products collection
+    cartList.items.forEach(async (item) => {
+      const productId = item.product._id;
+      const currentQnt = Number(
+        products.items.find((item) => item._id === productId)?.quantity
+      );
+
+      const orderQnt = Number(item.quantity);
+      const newQnt = currentQnt - orderQnt;
+      const updatedData = {
+        quantity: newQnt,
+      };
+      await axios.put(`${baseURL}/products/${productId}`, updatedData);
+    });
+
+    // create Order with user id - database
+    const productsList = cartList.items.map((item) => {
+      return {
+        productId: item.product._id,
+        productQnt: item.quantity,
+      };
+    });
+    const currentUserId = users.currentUser.userId;
+    const orderData = {
+      products: productsList,
+      userId: currentUserId,
+    };
+    await axios.post(`${baseURL}/orders`, orderData);
+
+    // clear cartList
+    dispatch(resetCart());
+    alert(
+      `Hi ${users.currentUser.firstname}, your order has been created. Thank you.`
+    );
+  };
 
   return (
     <>
@@ -87,6 +126,8 @@ function Checkout() {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Button onClick={handlePayment}>Pay for your order</Button>
     </>
   );
 }

@@ -79,8 +79,8 @@ const Home = () => {
         </Item>
       </Stack>
 
-      <Paper sx={{ width: "100%" }}>
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      <Paper sx={{ width: "100%", backgroundColor: "#e0f7fa" }}>
+        <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           {renderList.map((item) => (
             <Grid item xs={3} key={item._id}>
               <ProductCard product={item} key={item._id} />

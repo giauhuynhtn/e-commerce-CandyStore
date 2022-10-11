@@ -4,7 +4,7 @@ export type OrderDocument = Document & {
   orderDate: Date
   deliveryDate: Date
   returnDate: Date
-  products: mongoose.Schema.Types.ObjectId[]
+  products: Record<string, any>[]
   userId: mongoose.Schema.Types.ObjectId
   status: 'pending' | 'delivered' | 'returned' | 'cancelled'
 }
@@ -21,10 +21,12 @@ const orderSchema = new mongoose.Schema({
   returnDate: {
     type: String,
   },
-  products: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: 'Product',
-  },
+  products: [
+    {
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+      productQnt: { type: Number },
+    },
+  ],
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
