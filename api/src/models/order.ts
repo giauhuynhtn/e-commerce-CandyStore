@@ -1,10 +1,15 @@
 import mongoose, { Document } from 'mongoose'
 
+interface ProductObj {
+  productId: mongoose.Schema.Types.ObjectId
+  productQnt: number
+}
+
 export type OrderDocument = Document & {
   orderDate: Date
   deliveryDate: Date
   returnDate: Date
-  products: Record<string, any>[]
+  products: ProductObj[]
   userId: mongoose.Schema.Types.ObjectId
   status: 'pending' | 'delivered' | 'returned' | 'cancelled'
 }
