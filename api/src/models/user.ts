@@ -49,11 +49,11 @@ const userSchema = new mongoose.Schema({
     ref: 'Permission',
   },
   isBanned: {
-    type: String,
+    type: Boolean,
     default: false,
   },
   isAdmin: {
-    type: String,
+    type: Boolean,
     default: false,
   },
 })
