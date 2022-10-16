@@ -4,6 +4,7 @@ import ProductInfo from "pages/ProductInfo";
 import Dashboard from "pages/Dashboard";
 import Login from "pages/Login";
 import Checkout from "pages/Checkout";
+import ProductUpdate from "pages/ProductUpdate";
 
 const App = () => {
   return (
@@ -13,6 +14,10 @@ const App = () => {
         <Route path='/home' element={<Home />} />
         <Route path='/checkout' element={<Checkout />} />
         <Route path='/product/:productId' element={<ProductInfo />} />
+        <Route
+          path='/admin/dashboard/product/:productId'
+          element={<ProductUpdate />}
+        />
         <Route path='/admin/dashboard' element={<Dashboard />} />
       </Routes>
     </BrowserRouter>

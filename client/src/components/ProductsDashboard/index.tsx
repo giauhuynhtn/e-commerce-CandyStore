@@ -7,15 +7,35 @@ import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
+import { useDispatch } from "react-redux";
+import axios from "axios";
 
 import { RootState } from "../../redux/store";
+import { Product } from "../../redux/slices/productsSlice";
+import { useNavigate } from "react-router-dom";
+import { AppDispatch } from "../../redux/store";
+import { fetchProductsThunk } from "services/thunks.services";
+
+const baseURL = "http://localhost:4000/api/v1/products";
 
 function ProductsDashboard() {
+  let navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+
   const { products } = useSelector((state: RootState) => {
     return state;
   });
 
-  const handleEditproduct = () => {};
+  const handleEditProduct = (product: Product) => {
+    navigate(`/admin/dashboard/product/${product._id}`);
+  };
+
+  const handleRemoveProduct = async (product: Product) => {
+    await axios.delete(`${baseURL}/${product._id}`);
+    const token = localStorage.getItem("candy-store-token") || "";
+
+    dispatch(fetchProductsThunk(token));
+  };
   return (
     <>
       <TableContainer component={Paper}>
@@ -75,8 +95,15 @@ function ProductsDashboard() {
                   {product.quantity}
                 </TableCell>
                 <TableCell align='left' sx={{ width: 100 }}>
-                  <Button onClick={handleEditproduct} variant='contained'>
+                  <Button
+                    onClick={() => handleEditProduct(product)}
+                    variant='contained'>
                     Edit
+                  </Button>
+                  <Button
+                    onClick={() => handleRemoveProduct(product)}
+                    variant='contained'>
+                    Remove
                   </Button>
                 </TableCell>
               </TableRow>

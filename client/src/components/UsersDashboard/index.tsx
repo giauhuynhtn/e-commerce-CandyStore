@@ -5,7 +5,6 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
-// import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import { useDispatch } from "react-redux";
 
@@ -27,10 +26,7 @@ function UsersDashboard() {
   }, [dispatch]);
 
   const handleBanUser = async (banStatus: boolean, userId: string) => {
-    console.log("banStatus:", banStatus);
-    console.log("userId:", userId);
     const newBanStatus = String(banStatus) === "true" ? false : true;
-    console.log("newBanStatus:", newBanStatus);
     await axios.put(`${baseURL}/${userId}`, { isBanned: newBanStatus });
     dispatch(fetchUsersThunk());
   };
