@@ -7,6 +7,7 @@ export type Order = {
   returnDate: Date;
   products: string[];
   userId: string;
+  status: string;
 };
 
 export interface OrderState {
