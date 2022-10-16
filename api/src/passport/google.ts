@@ -1,7 +1,7 @@
 import GoogleTokenStrategy from 'passport-google-id-token'
 import { GOOGLE_CLIENT_ID } from '../util/secrets'
 
-import User from '../models/user'
+import User, { UserDocument } from '../models/user'
 import { ParsedToken, VerifiedCallback } from '../types'
 
 export default function () {
@@ -12,7 +12,7 @@ export default function () {
     async (parsedToken: ParsedToken, googleId: string, done: VerifiedCallback) => {
       try {
         const email = parsedToken.payload.email
-        let user: any = await User.findOne({ email })
+        let user: UserDocument | null = await User.findOne({ email })
 
         if (!user) {
           user = new User({
