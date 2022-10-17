@@ -36,8 +36,13 @@ function ProductsDashboard() {
 
     dispatch(fetchProductsThunk(token));
   };
+
+  const handleAddNewProduct = () => {
+    navigate("/admin/dashboard/product/");
+  };
   return (
     <>
+      <Button onClick={handleAddNewProduct}>Add new product</Button>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label='countries table'>
           <TableHead>

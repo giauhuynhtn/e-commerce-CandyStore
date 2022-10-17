@@ -11,15 +11,12 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
-import { AppDispatch } from "../../redux/store";
+import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";
 import { fetchProductsThunk } from "services/thunks.services";
 import MenuBar from "components/MenuBar";
 
-interface SelectedProduct {
-  selectedProduct: Product;
-}
-
+const baseURL = "http://localhost:4000/api/v1/products";
 const categories = [
   "gummy",
   "candy stick",
@@ -28,18 +25,17 @@ const categories = [
   "jelly beans",
 ];
 
-const baseURL = "http://localhost:4000/api/v1/products";
-
-function ProductForm({ selectedProduct }: SelectedProduct) {
-  const [values, setValues] = React.useState<Product>({
-    _id: selectedProduct._id,
-    name: selectedProduct.name,
-    category: selectedProduct.category,
-    description: selectedProduct.description,
-    price: selectedProduct.price,
-    quantity: selectedProduct.quantity,
-    img: selectedProduct.img,
-  });
+function AddNewProduct() {
+  let newProduct = {
+    _id: "",
+    name: "",
+    category: "",
+    description: "",
+    price: 0,
+    quantity: 0,
+    img: "",
+  };
+  const [values, setValues] = React.useState<Product>(newProduct);
 
   let navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -49,8 +45,8 @@ function ProductForm({ selectedProduct }: SelectedProduct) {
       setValues({ ...values, [prop]: event.target.value });
     };
 
-  const handleSubmit = async () => {
-    const updatedData = {
+  const handleCreate = async () => {
+    const newData = {
       name: values.name,
       category: values.category,
       description: values.description,
@@ -59,10 +55,10 @@ function ProductForm({ selectedProduct }: SelectedProduct) {
       img: values.img,
     };
 
-    await axios.put(`${baseURL}/${values._id}`, updatedData);
+    await axios.post(`${baseURL}`, newData);
     const token = localStorage.getItem("candy-store-token") || "";
     dispatch(fetchProductsThunk(token));
-    alert("Your changes have been save.");
+    alert("You have created a new product.");
   };
 
   return (
@@ -71,7 +67,7 @@ function ProductForm({ selectedProduct }: SelectedProduct) {
       <div>
         <Box sx={{ display: "flex" }}>
           <Typography sx={{ margin: "auto", paddingTop: "20px" }}>
-            Update product information - ID: {values._id}
+            Create new product:
           </Typography>
         </Box>
 
@@ -124,7 +120,7 @@ function ProductForm({ selectedProduct }: SelectedProduct) {
           sx={{ m: 1 }}
           select
           label='Product category'
-          value={selectedProduct.category}
+          value={values.category}
           onChange={handleChange("category")}>
           {categories.map((i, index) => (
             <MenuItem key={index} value={i}>
@@ -153,8 +149,8 @@ function ProductForm({ selectedProduct }: SelectedProduct) {
       </div>
 
       <Box>
-        <Button variant='outlined' onClick={handleSubmit}>
-          Update
+        <Button variant='outlined' onClick={handleCreate}>
+          Create
         </Button>
         <Button
           variant='outlined'
@@ -166,4 +162,4 @@ function ProductForm({ selectedProduct }: SelectedProduct) {
   );
 }
 
-export default ProductForm;
+export default AddNewProduct;

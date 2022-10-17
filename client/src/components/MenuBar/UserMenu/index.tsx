@@ -148,7 +148,7 @@ function UserMenu() {
     <>
       <Typography sx={{ paddingLeft: "8px" }}>
         Hi,{" "}
-        {users.currentUser.isAdmin === "true"
+        {users.currentUser.isAdmin
           ? `admin ${users.currentUser.firstname}`
           : users.currentUser.firstname}
       </Typography>
