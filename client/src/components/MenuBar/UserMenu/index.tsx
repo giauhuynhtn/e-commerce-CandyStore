@@ -146,7 +146,7 @@ function UserMenu() {
   );
   return (
     <>
-      <Typography sx={{ paddingLeft: "8px" }}>
+      <Typography sx={{ paddingLeft: "8px", color: "#e3f2fd" }}>
         Hi,{" "}
         {users.currentUser.isAdmin
           ? `admin ${users.currentUser.firstname}`

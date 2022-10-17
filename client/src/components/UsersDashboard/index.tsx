@@ -1,17 +1,18 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { TableCell, TableHead, TableRow } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import { TableCell, TableHead, TableRow, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import { useDispatch } from "react-redux";
+import { ThemeProvider } from "@mui/material/styles";
 
+import { themePalette } from "components/ThemeProvider";
 import { AppDispatch } from "../../redux/store";
 import { RootState } from "../../redux/store";
 import { fetchUsersThunk } from "services/thunks.services";
-import axios from "axios";
 
 function UsersDashboard() {
   const { users } = useSelector((state: RootState) => {
@@ -31,9 +32,12 @@ function UsersDashboard() {
     dispatch(fetchUsersThunk());
   };
   return (
-    <>
+    <ThemeProvider theme={themePalette}>
+      <Typography variant='subtitle1' sx={{ marginBottom: 1 }}>
+        Total: {users.items.length} users
+      </Typography>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label='countries table'>
+        <Table sx={{ minWidth: 650 }} aria-label='users table'>
           <TableHead>
             <TableRow>
               <TableCell align='center' sx={{ fontSize: 16, color: "#212121" }}>
@@ -84,11 +88,19 @@ function UsersDashboard() {
                 <TableCell align='center' sx={{ width: 100 }}>
                   {user.isAdmin ? (
                     ""
-                  ) : (
+                  ) : user.isBanned ? (
                     <Button
+                      color='success'
                       onClick={() => handleBanUser(user.isBanned, user._id)}
                       variant='contained'>
-                      {user.isBanned ? "Unban" : "Ban"}
+                      Unban
+                    </Button>
+                  ) : (
+                    <Button
+                      color='warning'
+                      onClick={() => handleBanUser(user.isBanned, user._id)}
+                      variant='contained'>
+                      Ban
                     </Button>
                   )}
                 </TableCell>
@@ -97,7 +109,7 @@ function UsersDashboard() {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </ThemeProvider>
   );
 }
 

@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Grid from "@mui/material/Grid";
+import jwt_decode from "jwt-decode";
+import Grid from "@mui/material/Unstable_Grid2";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
-import jwt_decode from "jwt-decode";
+import Box from "@mui/material/Box";
+import { styled } from "@mui/material/styles";
 
 import { AppDispatch } from "../redux/store";
 import ProductCard from "../components/ProductCard";
@@ -13,7 +15,6 @@ import SearchBox from "../components/SearchBox";
 import FilterByCategory from "../components/FilterByCategory";
 import { RootState } from "../redux/store";
 import { fetchProductsThunk } from "../services/thunks.services";
-import { styled } from "@mui/material/styles";
 import { CurrentUser, setCurrentUser } from "redux/slices/usersSlice";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -76,7 +77,7 @@ const Home = () => {
       <Stack
         direction='row'
         spacing={2}
-        sx={{ margin: "20px" }}
+        sx={{ margin: "40px" }}
         alignItems='center'
         justifyContent='center'>
         <Item>
@@ -87,15 +88,34 @@ const Home = () => {
         </Item>
       </Stack>
 
-      <Paper sx={{ width: "100%", backgroundColor: "#e0f7fa" }}>
-        <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      {/* <Paper sx={{ width: "100%", backgroundColor: "#e0f7fa" }}>
+        <Grid
+          container
+          rowSpacing={2}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          sx={{ margin: "auto" }}>
           {renderList.map((item) => (
             <Grid item xs={3} key={item._id}>
               <ProductCard product={item} key={item._id} />
             </Grid>
           ))}
         </Grid>
-      </Paper>
+      </Paper> */}
+
+      <Box sx={{ flexGrow: 1, marginTop: "60px" }}>
+        <Grid
+          container
+          spacing={{ xs: 2, md: 3 }}
+          columns={{ xs: 4, sm: 8, md: 12 }}>
+          {renderList.map((item) => (
+            <Grid xs={3} sm={3} md={3} key={item._id}>
+              <>
+                <ProductCard product={item} key={item._id} />
+              </>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </Container>
   );
 };

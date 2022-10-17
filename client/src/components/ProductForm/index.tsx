@@ -1,5 +1,6 @@
 import React from "react";
-import { Product } from "redux/slices/productsSlice";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -8,13 +9,12 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import axios from "axios";
+
+import { Product } from "redux/slices/productsSlice";
 import { AppDispatch } from "../../redux/store";
 import { useDispatch } from "react-redux";
 import { fetchProductsThunk } from "services/thunks.services";
-import MenuBar from "components/MenuBar";
 
 interface SelectedProduct {
   selectedProduct: Product;
@@ -67,7 +67,6 @@ function ProductForm({ selectedProduct }: SelectedProduct) {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
-      <MenuBar />
       <div>
         <Box sx={{ display: "flex" }}>
           <Typography sx={{ margin: "auto", paddingTop: "20px" }}>
@@ -90,6 +89,7 @@ function ProductForm({ selectedProduct }: SelectedProduct) {
           defaultValue={values.description}
           onChange={handleChange("description")}
           fullWidth
+          multiline
           sx={{ m: 1 }}
         />
 
@@ -139,6 +139,7 @@ function ProductForm({ selectedProduct }: SelectedProduct) {
           defaultValue={values.img}
           onChange={handleChange("img")}
           fullWidth
+          multiline
           sx={{ m: 1 }}
         />
         <Box style={{ margin: "10px" }}>

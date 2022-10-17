@@ -9,6 +9,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { Container } from "@mui/material";
 
 import { AppDispatch, RootState } from "../../../redux/store";
 import {
@@ -16,7 +17,6 @@ import {
   openCart,
   removeCartItem,
 } from "../../../redux/slices/cartSlice";
-import { Container } from "@mui/material";
 
 function Cart() {
   const dispatch = useDispatch<AppDispatch>();

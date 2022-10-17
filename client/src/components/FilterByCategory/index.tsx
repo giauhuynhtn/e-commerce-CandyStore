@@ -8,11 +8,12 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import IconButton from "@mui/material/IconButton";
 import { useDispatch } from "react-redux";
 import Button from "@mui/material/Button";
+import { ThemeProvider } from "@mui/material/styles";
 
 import { AppDispatch } from "../../redux/store";
-
 import { fetchProductsByCategoryThunk } from "../../services/thunks.services";
 import { resetFilteredItems } from "redux/slices/productsSlice";
+import { themePalette } from "components/ThemeProvider";
 
 const categories = [
   "gummy",
@@ -36,41 +37,50 @@ export default function FilterByCategory() {
 
   const handleReset = () => {
     dispatch(resetFilteredItems());
+    setValue("");
   };
 
   return (
-    <Box
-      sx={{
-        p: "2px 4px",
-        display: "flex",
-        alignItems: "center",
-        minWidth: 400,
-      }}>
-      <FormControl sx={{ minWidth: 348 }}>
-        <InputLabel id='filter-by-category' sx={{ color: "#00897b" }}>
-          Category
-        </InputLabel>
-        <Select
-          labelId='filter-by-category'
-          id='category-select'
-          value={value}
-          label='Category'
-          onChange={handleChange}>
-          {categories.map((category, index) => (
-            <MenuItem value={category} key={index}>
-              {category}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <IconButton
-        type='button'
-        sx={{ p: "10px" }}
-        aria-label='search'
-        onClick={handleFilterByCategory}>
-        <FilterAltIcon />
-      </IconButton>
-      <Button onClick={handleReset}>Reset</Button>
-    </Box>
+    <ThemeProvider theme={themePalette}>
+      <Box
+        sx={{
+          p: "2px 4px",
+          display: "flex",
+          alignItems: "center",
+          minWidth: 400,
+        }}>
+        <FormControl sx={{ minWidth: 280 }}>
+          <InputLabel id='filter-by-category' sx={{ color: "#00897b" }}>
+            Category
+          </InputLabel>
+          <Select
+            labelId='filter-by-category'
+            id='category-select'
+            value={value}
+            label='Category'
+            onChange={handleChange}>
+            {categories.map((category, index) => {
+              const categoryName =
+                category[0].toLocaleUpperCase() + category.slice(1);
+              return (
+                <MenuItem value={category} key={index}>
+                  {categoryName}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+        <IconButton
+          type='button'
+          sx={{ p: "10px" }}
+          aria-label='search'
+          onClick={handleFilterByCategory}>
+          <FilterAltIcon color='secondary' />
+        </IconButton>
+        <Button color='secondary' onClick={handleReset}>
+          Reset
+        </Button>
+      </Box>
+    </ThemeProvider>
   );
 }

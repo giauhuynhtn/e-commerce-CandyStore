@@ -1,17 +1,19 @@
 import React from "react";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import { TableCell, TableHead, TableRow } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 
 import MenuBar from "components/MenuBar";
 import { removeCartItem, resetCart } from "redux/slices/cartSlice";
-import axios from "axios";
+import { themePalette } from "components/ThemeProvider";
 
 function Checkout() {
   const dispatch = useDispatch<AppDispatch>();
@@ -59,76 +61,98 @@ function Checkout() {
   };
 
   return (
-    <>
+    <ThemeProvider theme={themePalette}>
       <MenuBar />
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label='countries table'>
-          <TableHead>
-            <TableRow>
-              <TableCell align='center' sx={{ fontSize: 16, color: "#212121" }}>
-                Number
-              </TableCell>
-              <TableCell align='center' sx={{ fontSize: 16, color: "#212121" }}>
-                Image
-              </TableCell>
-              <TableCell align='center' sx={{ fontSize: 16, color: "#212121" }}>
-                Name
-              </TableCell>
-              <TableCell align='center' sx={{ fontSize: 16, color: "#212121" }}>
-                Price
-              </TableCell>
-              <TableCell align='center' sx={{ fontSize: 16, color: "#212121" }}>
-                Quantity
-              </TableCell>
-              <TableCell align='center' sx={{ fontSize: 16, color: "#212121" }}>
-                Action
-              </TableCell>
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {cartList.items.map((item, index) => (
-              <TableRow hover={true} key={item.product._id}>
-                <TableCell align='center' sx={{ width: 100 }}>
-                  <Typography sx={{ fontSize: 14 }}>{index + 1}</Typography>
+      <Box sx={{ margin: 2 }}>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label='checkout table'>
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  align='center'
+                  sx={{ fontSize: 16, color: "secondary" }}>
+                  Number
                 </TableCell>
-
-                <TableCell align='center' sx={{ width: 80 }}>
-                  <img
-                    src={item.product.img}
-                    alt={item.product.name}
-                    width='60px'
-                  />
+                <TableCell
+                  align='center'
+                  sx={{ fontSize: 16, color: "secondary" }}>
+                  Image
                 </TableCell>
-
-                <TableCell align='center' sx={{ width: 200 }}>
-                  {item.product.name}
+                <TableCell
+                  align='center'
+                  sx={{ fontSize: 16, color: "secondary" }}>
+                  Name
                 </TableCell>
-
-                <TableCell align='center' sx={{ width: 100 }}>
-                  {item.product.price}
+                <TableCell
+                  align='center'
+                  sx={{ fontSize: 16, color: "secondary" }}>
+                  Price
                 </TableCell>
-
-                <TableCell align='center' sx={{ width: 100 }}>
-                  {item.quantity}
+                <TableCell
+                  align='center'
+                  sx={{ fontSize: 16, color: "secondary" }}>
+                  Quantity
                 </TableCell>
-                <TableCell align='center' sx={{ width: 100 }}>
-                  <Button
-                    onClick={() => {
-                      dispatch(removeCartItem(item));
-                    }}
-                    variant='contained'>
-                    Remove
-                  </Button>
+                <TableCell
+                  align='center'
+                  sx={{ fontSize: 16, color: "secondary" }}>
+                  Action
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
 
-      <Button onClick={handlePayment}>Pay for your order</Button>
-    </>
+            <TableBody>
+              {cartList.items.map((item, index) => (
+                <TableRow hover={true} key={item.product._id}>
+                  <TableCell align='center' sx={{ width: 100 }}>
+                    <Typography sx={{ fontSize: 14 }}>{index + 1}</Typography>
+                  </TableCell>
+
+                  <TableCell align='center' sx={{ width: 80 }}>
+                    <img
+                      src={item.product.img}
+                      alt={item.product.name}
+                      width='60px'
+                    />
+                  </TableCell>
+
+                  <TableCell align='center' sx={{ width: 200 }}>
+                    {item.product.name}
+                  </TableCell>
+
+                  <TableCell align='center' sx={{ width: 100 }}>
+                    {item.product.price}
+                  </TableCell>
+
+                  <TableCell align='center' sx={{ width: 100 }}>
+                    {item.quantity}
+                  </TableCell>
+                  <TableCell align='center' sx={{ width: 100 }}>
+                    <Button
+                      onClick={() => {
+                        dispatch(removeCartItem(item));
+                      }}
+                      variant='contained'
+                      color='success'
+                      sx={{ color: "primary.dark" }}>
+                      Remove
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        <Button
+          variant='contained'
+          sx={{ marginTop: 2 }}
+          color='primary'
+          onClick={handlePayment}>
+          Pay for your order
+        </Button>
+      </Box>
+    </ThemeProvider>
   );
 }
 

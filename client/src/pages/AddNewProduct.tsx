@@ -1,5 +1,5 @@
 import React from "react";
-import { Product } from "redux/slices/productsSlice";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -10,7 +10,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import axios from "axios";
+
+import { Product } from "redux/slices/productsSlice";
 import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";
 import { fetchProductsThunk } from "services/thunks.services";
@@ -26,7 +27,7 @@ const categories = [
 ];
 
 function AddNewProduct() {
-  let newProduct = {
+  const newProduct = {
     _id: "",
     name: "",
     category: "",
@@ -59,6 +60,7 @@ function AddNewProduct() {
     const token = localStorage.getItem("candy-store-token") || "";
     dispatch(fetchProductsThunk(token));
     alert("You have created a new product.");
+    setValues(newProduct);
   };
 
   return (
@@ -74,7 +76,7 @@ function AddNewProduct() {
         <TextField
           id='outlined-uncontrolled'
           label='Product name'
-          defaultValue={values.name}
+          value={values.name}
           onChange={handleChange("name")}
           fullWidth
           sx={{ m: 1 }}
@@ -83,9 +85,10 @@ function AddNewProduct() {
         <TextField
           id='outlined-uncontrolled'
           label='Product description'
-          defaultValue={values.description}
+          value={values.description}
           onChange={handleChange("description")}
           fullWidth
+          multiline
           sx={{ m: 1 }}
         />
 
@@ -132,9 +135,10 @@ function AddNewProduct() {
         <TextField
           id='outlined-uncontrolled'
           label='Product image link'
-          defaultValue={values.img}
+          value={values.img}
           onChange={handleChange("img")}
           fullWidth
+          multiline
           sx={{ m: 1 }}
         />
         <Box style={{ margin: "10px" }}>

@@ -1,8 +1,9 @@
 import React from "react";
-import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
-import MenuBar from "components/MenuBar";
 import { useParams } from "react-router-dom";
+
+import { RootState } from "../redux/store";
+import MenuBar from "components/MenuBar";
 import ProductForm from "components/ProductForm";
 
 function ProductUpdate() {
@@ -10,14 +11,11 @@ function ProductUpdate() {
     return state;
   });
 
-  console.log("products:", products);
-
   const { productId } = useParams<{ productId: string }>();
 
   const selectProduct = products.items.find(
     (product) => product._id === productId
   );
-  console.log("selectProduct:", selectProduct);
 
   return (
     <>

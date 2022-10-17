@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Box, ThemeProvider, createTheme } from "@mui/system";
-import { GoogleLogin } from "@react-oauth/google";
-import axios from "axios";
-import CardMedia from "@mui/material/CardMedia";
 import { useNavigate } from "react-router-dom";
-import { CurrentUser, setCurrentUser } from "../redux/slices/usersSlice";
+import axios from "axios";
 import jwt_decode from "jwt-decode";
+import { GoogleLogin } from "@react-oauth/google";
+import { Box, ThemeProvider, createTheme } from "@mui/system";
+import CardMedia from "@mui/material/CardMedia";
+
+import { CurrentUser, setCurrentUser } from "../redux/slices/usersSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 
