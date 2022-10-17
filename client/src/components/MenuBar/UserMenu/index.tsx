@@ -87,7 +87,7 @@ function UserMenu() {
           <MenuItem>
             <Container
               onClick={() => {
-                navigate(`/user/${userMenu}`);
+                navigate(`/user/${userMenu.toLocaleLowerCase()}`);
               }}
               sx={{
                 flexGrow: 1,
@@ -103,7 +103,7 @@ function UserMenu() {
           </MenuItem>
         ))}
         <Can
-          role={users.currentUser.isAdmin === "true" ? "admin" : "user"}
+          role={users.currentUser.isAdmin ? "admin" : "user"}
           perform='products:get'
           yes={() => (
             <MenuItem>

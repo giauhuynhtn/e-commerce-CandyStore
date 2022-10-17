@@ -76,6 +76,7 @@ function ProductForm({ selectedProduct }: SelectedProduct) {
           id='outlined-uncontrolled'
           label='Product name'
           defaultValue={values.name}
+          onChange={handleChange("name")}
           fullWidth
           sx={{ m: 1 }}
         />
@@ -84,6 +85,7 @@ function ProductForm({ selectedProduct }: SelectedProduct) {
           id='outlined-uncontrolled'
           label='Product description'
           defaultValue={values.description}
+          onChange={handleChange("description")}
           fullWidth
           sx={{ m: 1 }}
         />
@@ -132,6 +134,7 @@ function ProductForm({ selectedProduct }: SelectedProduct) {
           id='outlined-uncontrolled'
           label='Product image link'
           defaultValue={values.img}
+          onChange={handleChange("img")}
           fullWidth
           sx={{ m: 1 }}
         />

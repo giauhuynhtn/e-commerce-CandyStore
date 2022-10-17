@@ -26,7 +26,7 @@ function UsersDashboard() {
   }, [dispatch]);
 
   const handleBanUser = async (banStatus: boolean, userId: string) => {
-    const newBanStatus = String(banStatus) === "true" ? false : true;
+    const newBanStatus = banStatus ? false : true;
     await axios.put(`${baseURL}/${userId}`, { isBanned: newBanStatus });
     dispatch(fetchUsersThunk());
   };
@@ -70,10 +70,10 @@ function UsersDashboard() {
                   {user.firstname}
                 </TableCell>
                 <TableCell align='center' sx={{ width: 100 }}>
-                  {user.isBanned}
+                  {user.isBanned ? "true" : "false"}
                 </TableCell>
                 <TableCell align='center' sx={{ width: 100 }}>
-                  {user.isAdmin}
+                  {user.isAdmin ? "true" : "false"}
                 </TableCell>
                 {/* <TableCell align='center' sx={{ width: 200 }}>
                   {user.orders}
@@ -85,7 +85,7 @@ function UsersDashboard() {
                   <Button
                     onClick={() => handleBanUser(user.isBanned, user._id)}
                     variant='contained'>
-                    {String(user.isBanned) === "true" ? "Unban" : "Ban"}
+                    {String(user.isBanned) ? "Unban" : "Ban"}
                   </Button>
                 </TableCell>
               </TableRow>

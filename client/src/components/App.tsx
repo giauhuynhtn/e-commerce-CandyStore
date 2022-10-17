@@ -5,6 +5,7 @@ import Dashboard from "pages/Dashboard";
 import Login from "pages/Login";
 import Checkout from "pages/Checkout";
 import ProductUpdate from "pages/ProductUpdate";
+import UserAccountInfo from "pages/UserAccountInfo";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           element={<ProductUpdate />}
         />
         <Route path='/admin/dashboard' element={<Dashboard />} />
+        <Route path='/user/account' element={<UserAccountInfo />} />
       </Routes>
     </BrowserRouter>
   );
