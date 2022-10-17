@@ -7,10 +7,12 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import IconButton from "@mui/material/IconButton";
 import { useDispatch } from "react-redux";
+import Button from "@mui/material/Button";
 
 import { AppDispatch } from "../../redux/store";
 
 import { fetchProductsByCategoryThunk } from "../../services/thunks.services";
+import { resetFilteredItems } from "redux/slices/productsSlice";
 
 const categories = [
   "gummy",
@@ -30,6 +32,10 @@ export default function FilterByCategory() {
 
   const handleFilterByCategory = () => {
     dispatch(fetchProductsByCategoryThunk(value));
+  };
+
+  const handleReset = () => {
+    dispatch(resetFilteredItems());
   };
 
   return (
@@ -64,6 +70,7 @@ export default function FilterByCategory() {
         onClick={handleFilterByCategory}>
         <FilterAltIcon />
       </IconButton>
+      <Button onClick={handleReset}>Reset</Button>
     </Box>
   );
 }

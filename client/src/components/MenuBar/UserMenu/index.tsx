@@ -83,8 +83,8 @@ function UserMenu() {
       onClose={handleUserMenuClose}
       sx={{ top: 40, right: 0 }}>
       <Box sx={{ minWidth: 200, flexGrow: 1 }}>
-        {userMenuList.map((userMenu) => (
-          <MenuItem>
+        {userMenuList.map((userMenu, index) => (
+          <MenuItem key={index}>
             <Container
               onClick={() => {
                 navigate(`/user/${userMenu.toLocaleLowerCase()}`);

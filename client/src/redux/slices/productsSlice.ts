@@ -42,7 +42,11 @@ const initialState: ProductsState = {
 export const productsSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    resetFilteredItems: (state) => {
+      state.filteredItems = [];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchProductsThunk.pending, (state) => {
       state.isLoading = true;
@@ -81,5 +85,6 @@ export const productsSlice = createSlice({
     });
   },
 });
+export const { resetFilteredItems } = productsSlice.actions;
 
 export default productsSlice.reducer;

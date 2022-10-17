@@ -82,11 +82,15 @@ function UsersDashboard() {
                   {user.email}
                 </TableCell>
                 <TableCell align='center' sx={{ width: 100 }}>
-                  <Button
-                    onClick={() => handleBanUser(user.isBanned, user._id)}
-                    variant='contained'>
-                    {String(user.isBanned) ? "Unban" : "Ban"}
-                  </Button>
+                  {user.isAdmin ? (
+                    ""
+                  ) : (
+                    <Button
+                      onClick={() => handleBanUser(user.isBanned, user._id)}
+                      variant='contained'>
+                      {user.isBanned ? "Unban" : "Ban"}
+                    </Button>
+                  )}
                 </TableCell>
               </TableRow>
             ))}

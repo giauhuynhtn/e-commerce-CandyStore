@@ -50,6 +50,7 @@ const fetchProductsThunk = createAsyncThunk(
 const fetchUsersThunk = createAsyncThunk("users/fetch", async () => {
   const URL = `${path}/users`;
   const response = await axios.get(URL);
+  console.log("response:", response.data);
   return { data: response.data, status: response.status };
 });
 

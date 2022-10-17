@@ -61,6 +61,7 @@ function ProductForm({ selectedProduct }: SelectedProduct) {
     await axios.put(`${baseURL}/${values._id}`, updatedData);
     const token = localStorage.getItem("candy-store-token") || "";
     dispatch(fetchProductsThunk(token));
+    alert("Your changes have been save.");
   };
 
   return (

@@ -5,9 +5,11 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
+import Button from "@mui/material/Button";
 
 import { fetchProductsByNameThunk } from "../../services/thunks.services";
 import { AppDispatch } from "../../redux/store";
+import { resetFilteredItems } from "redux/slices/productsSlice";
 
 export default function SearchBox() {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,6 +23,10 @@ export default function SearchBox() {
 
   const handleClick = () => {
     dispatch(fetchProductsByNameThunk(searchValue));
+  };
+
+  const handleReset = () => {
+    dispatch(resetFilteredItems());
   };
 
   return (
@@ -51,6 +57,7 @@ export default function SearchBox() {
         onClick={handleClick}>
         <SearchIcon />
       </IconButton>
+      <Button onClick={handleReset}>Reset</Button>
     </Box>
   );
 }

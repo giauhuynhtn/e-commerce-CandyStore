@@ -4,6 +4,7 @@ import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
+import jwt_decode from "jwt-decode";
 
 import { AppDispatch } from "../redux/store";
 import ProductCard from "../components/ProductCard";
@@ -13,6 +14,7 @@ import FilterByCategory from "../components/FilterByCategory";
 import { RootState } from "../redux/store";
 import { fetchProductsThunk } from "../services/thunks.services";
 import { styled } from "@mui/material/styles";
+import { CurrentUser, setCurrentUser } from "redux/slices/usersSlice";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -45,10 +47,16 @@ const Home = () => {
     dispatch(fetchProductsThunk(token));
   }, [dispatch, token]);
 
-  const { products, users } = useSelector((state: RootState) => {
+  useEffect(() => {
+    if (token !== "") {
+      const decoded = jwt_decode(token) as CurrentUser;
+      dispatch(setCurrentUser(decoded));
+    }
+  }, [dispatch, token]);
+
+  const { products } = useSelector((state: RootState) => {
     return state;
   });
-  console.log("currentUser:", users.currentUser);
 
   const renderList =
     products.filteredItems.length === 0
