@@ -24,6 +24,13 @@ const ProductInfo = () => {
   }, [dispatch, productId]);
 
   const [quantity, setQuantity] = useState(1);
+
+  const handleChangeQuantity = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (typeof event.target.value === "number") {
+      setQuantity(event.target.value as number);
+    }
+  };
+
   const handleClickIncrease = () => {
     setQuantity((prev) => {
       if (prev + 1 > products.productInfo.quantity) {
@@ -105,6 +112,8 @@ const ProductInfo = () => {
 
               <input
                 value={quantity}
+                type='number'
+                onChange={handleChangeQuantity}
                 style={{
                   width: "140px",
                   backgroundColor: "#e0f2f1",

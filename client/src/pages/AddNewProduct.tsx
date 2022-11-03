@@ -16,6 +16,8 @@ import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";
 import { fetchProductsThunk } from "services/thunks.services";
 import MenuBar from "components/MenuBar";
+import { ThemeProvider } from "@mui/material/styles";
+import { themePalette } from "components/ThemeProvider";
 
 const baseURL = "http://localhost:4000/api/v1/products";
 const categories = [
@@ -64,105 +66,119 @@ function AddNewProduct() {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
+    <ThemeProvider theme={themePalette}>
       <MenuBar />
-      <div>
-        <Box sx={{ display: "flex" }}>
-          <Typography sx={{ margin: "auto", paddingTop: "20px" }}>
-            Create new product:
-          </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          margin: "20px",
+        }}>
+        <div>
+          <Box sx={{ display: "flex" }}>
+            <Typography
+              variant='h6'
+              color='secondary'
+              sx={{ margin: "auto", paddingTop: "20px" }}>
+              Create new product
+            </Typography>
+          </Box>
+
+          <TextField
+            id='outlined-uncontrolled'
+            label='Product name'
+            value={values.name}
+            onChange={handleChange("name")}
+            fullWidth
+            sx={{ m: 1 }}
+          />
+
+          <TextField
+            id='outlined-uncontrolled'
+            label='Product description'
+            value={values.description}
+            onChange={handleChange("description")}
+            fullWidth
+            multiline
+            sx={{ m: 1 }}
+          />
+
+          <FormControl sx={{ m: 1 }}>
+            <InputLabel htmlFor='outlined-adornment-price'>Price</InputLabel>
+            <OutlinedInput
+              id='outlined-adornment-price'
+              value={values.price}
+              onChange={handleChange("price")}
+              startAdornment={
+                <InputAdornment position='start'>EURO</InputAdornment>
+              }
+              label='Price'
+            />
+          </FormControl>
+
+          <FormControl sx={{ m: 1 }}>
+            <InputLabel htmlFor='outlined-adornment-quantity'>
+              Quantity
+            </InputLabel>
+            <OutlinedInput
+              id='outlined-adornment-quantity'
+              value={values.quantity}
+              onChange={handleChange("quantity")}
+              endAdornment={
+                <InputAdornment position='end'>Pack</InputAdornment>
+              }
+              label='Quantity'
+            />
+          </FormControl>
+          <TextField
+            id='outlined-select-category'
+            fullWidth
+            sx={{ m: 1 }}
+            select
+            label='Product category'
+            value={values.category}
+            onChange={handleChange("category")}>
+            {categories.map((i, index) => (
+              <MenuItem key={index} value={i}>
+                {i}
+              </MenuItem>
+            ))}
+          </TextField>
+
+          <TextField
+            id='outlined-uncontrolled'
+            label='Product image link'
+            value={values.img}
+            onChange={handleChange("img")}
+            fullWidth
+            multiline
+            sx={{ m: 1 }}
+          />
+          <Box style={{ margin: "10px" }}>
+            <Typography sx={{ fontSize: "12px" }}>Image preview:</Typography>
+            <img
+              src={values.img}
+              alt='Uncontrolled'
+              width='200px'
+              height='200px'
+            />
+          </Box>
+        </div>
+
+        <Box sx={{ marginLeft: "10px" }}>
+          <Button color='success' variant='contained' onClick={handleCreate}>
+            Create
+          </Button>
+          <Button
+            color='success'
+            variant='contained'
+            sx={{ marginLeft: "10px" }}
+            onClick={() => navigate("/admin/dashboard/")}>
+            Back
+          </Button>
         </Box>
-
-        <TextField
-          id='outlined-uncontrolled'
-          label='Product name'
-          value={values.name}
-          onChange={handleChange("name")}
-          fullWidth
-          sx={{ m: 1 }}
-        />
-
-        <TextField
-          id='outlined-uncontrolled'
-          label='Product description'
-          value={values.description}
-          onChange={handleChange("description")}
-          fullWidth
-          multiline
-          sx={{ m: 1 }}
-        />
-
-        <FormControl sx={{ m: 1 }}>
-          <InputLabel htmlFor='outlined-adornment-price'>Price</InputLabel>
-          <OutlinedInput
-            id='outlined-adornment-price'
-            value={values.price}
-            onChange={handleChange("price")}
-            startAdornment={
-              <InputAdornment position='start'>EURO</InputAdornment>
-            }
-            label='Price'
-          />
-        </FormControl>
-
-        <FormControl sx={{ m: 1 }}>
-          <InputLabel htmlFor='outlined-adornment-quantity'>
-            Quantity
-          </InputLabel>
-          <OutlinedInput
-            id='outlined-adornment-quantity'
-            value={values.quantity}
-            onChange={handleChange("quantity")}
-            endAdornment={<InputAdornment position='end'>Pack</InputAdornment>}
-            label='Quantity'
-          />
-        </FormControl>
-        <TextField
-          id='outlined-select-category'
-          fullWidth
-          sx={{ m: 1 }}
-          select
-          label='Product category'
-          value={values.category}
-          onChange={handleChange("category")}>
-          {categories.map((i, index) => (
-            <MenuItem key={index} value={i}>
-              {i}
-            </MenuItem>
-          ))}
-        </TextField>
-
-        <TextField
-          id='outlined-uncontrolled'
-          label='Product image link'
-          value={values.img}
-          onChange={handleChange("img")}
-          fullWidth
-          multiline
-          sx={{ m: 1 }}
-        />
-        <Box style={{ margin: "10px" }}>
-          <Typography sx={{ fontSize: "12px" }}>Image preview:</Typography>
-          <img
-            src={values.img}
-            alt='Uncontrolled'
-            width='200px'
-            height='200px'
-          />
-        </Box>
-      </div>
-
-      <Box>
-        <Button variant='outlined' onClick={handleCreate}>
-          Create
-        </Button>
-        <Button
-          variant='outlined'
-          onClick={() => navigate("/admin/dashboard/")}>
-          Back
-        </Button>
       </Box>
-    </Box>
+    </ThemeProvider>
   );
 }
 

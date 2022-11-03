@@ -116,7 +116,6 @@ function UserMenu() {
                   justifyContent: "flex-start",
                   alignItems: "center",
                 }}>
-                <Divider orientation='horizontal' />
                 <Typography sx={{ fontSize: 14, marginRight: 2 }}>
                   DASHBOARD
                 </Typography>
@@ -135,7 +134,6 @@ function UserMenu() {
               justifyContent: "flex-start",
               alignItems: "center",
             }}>
-            <Divider orientation='horizontal' />
             <Typography sx={{ fontSize: 14, marginRight: 2 }}>
               Log out
             </Typography>
